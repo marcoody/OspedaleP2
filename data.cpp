@@ -1,6 +1,6 @@
 #include "data.h"
 
-bool checkData(unsigned short g, unsigned short m, unsigned short a){
+bool checkData(u_int g, u_int m, u_int a){
     if(m>12 || g>31){return false;}
     bool bisestile=false;
     if(a%4==0){
@@ -16,7 +16,7 @@ bool checkData(unsigned short g, unsigned short m, unsigned short a){
     return true;
 }
 
-data::data(unsigned short g, unsigned short m, unsigned short a){
+data::data(u_int g, u_int m, u_int a){
     if(checkData(g,m,a)){
         _giorno=g; _mese=m; _anno=a;
     }
