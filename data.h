@@ -10,7 +10,7 @@ private:
     u_int _anno;
 public:
     //mettiamo un qualcosa di defalut?
-    data(u_int g, u_int m, u_int a);
+    data(u_int =1, u_int =1, u_int =1900);
     data(const data& d);
     data& operator=(const data& d);
     ~data(){};
