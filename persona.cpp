@@ -1,12 +1,10 @@
-#include "data.h"
 #include "persona.h"
-
 
 // Costruttore di default
 Persona::Persona() : Id("#000000"), Nome("Mario"), Cognome("Rossi") {}
 
 // Costruttore
-Persona::Persona(string i, string n, string c, const Data& d) : 
+Persona::Persona(string i, string n, string c, const Data& d) :
   Id(i), Nome(n), Cognome(c), DataNascita(d) {}
 
 // Costruttore di copia
