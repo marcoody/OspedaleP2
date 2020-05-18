@@ -16,20 +16,20 @@ bool checkData(u_int g, u_int m, u_int a){
   return true;
 }
 
-data::data(u_int g, u_int m, u_int a){
+Data::Data(u_int g, u_int m, u_int a){
   if(checkData(g,m,a)) {
     _giorno = g; _mese = m; _anno = a;
   }
 }
 
-data::data(const data& d) {
+Data::Data(const Data& d) {
   //qui non faccio il controllo perchè è già stato fatto durante la creazione di data
   _giorno = d._giorno;
   _mese = d._mese;
   _anno = d._anno;
 }
 
-data& data::operator=(const data& d){
+Data& Data::operator=(const Data& d){
   if(&d != this){
     _giorno = d._giorno;
     _mese = d._mese;
@@ -38,11 +38,11 @@ data& data::operator=(const data& d){
   return *this;
 }
 
-unsigned short data::getGiorno() const { return _giorno; }
-unsigned short data::getMese() const { return _mese; }
-unsigned short data::getAnno() const { return _anno; }
+unsigned short Data::getGiorno() const { return _giorno; }
+unsigned short Data::getMese() const { return _mese; }
+unsigned short Data::getAnno() const { return _anno; }
 
-bool data::isBisestile() const {
+bool Data::isBisestile() const {
   bool bisestile = false;
   u_int a = getAnno();
   if(a % 4 == 0) {
@@ -55,7 +55,7 @@ bool data::isBisestile() const {
   return bisestile;
 }
 
-void data::avanzaUnGiorno(){
+void Data::avanzaUnGiorno(){
     if((_mese == 4 || _mese == 6 || _mese == 9 || _mese == 11) && (_giorno == 30)) { ++_mese; _giorno = 1; }
     //qui non faccio controllo sul mese perchè se l'ogg data esiste, significa che è corretto(vedi costruttore)
     //quindi tutte le date corrette che hanno _giorno==31 avranno _mese==(mesi da 31 giorni)
@@ -72,31 +72,29 @@ void data::avanzaUnGiorno(){
 }
 
 // Operatore di incremento prefisso
-data& data::operator++() {
+Data& Data::operator++() {
   this->avanzaUnGiorno();
   return *this;
 }
 
 // Operatore di incremento postfisso
-data data::operator++(int) {
-  data temp = *this;
+Data Data::operator++(int) {
+  Data temp = *this;
   this->avanzaUnGiorno();
   return temp;
 }
  
-data data::operator+(int x) const{
-  data tmp=*this;
+Data Data::operator+(int x) const{
+  Data tmp=*this;
   for(u_int i = 0; i < x; ++i) { tmp.avanzaUnGiorno(); }
   return tmp;
 }
 
-bool data::operator==(const data& d) const{
+bool Data::operator==(const Data& d) const{
   return (d.getGiorno() == _giorno) && (d.getMese() == _mese) 
     && (d.getAnno() == _anno);
 }
 
-
-std::ostream &operator<<(std::ostream &os, const data& d){
-  return os << d.getGiorno() << "/" << d.getMese() << "/" << d.getAnno();
+ostream &operator<<(ostream &os, const Data& d){
+  return os << d._giorno << "/" << d._mese << "/" << d._anno;
 }
-
