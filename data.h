@@ -14,17 +14,17 @@ using std::ostream;
 // passati così>
 
 #define u_int unsigned short
-class data {
+class Data {
 private:
     u_int _giorno;
     u_int _mese;
     u_int _anno;
 public:
     //mettiamo un qualcosa di defalut?
-    data(u_int = 1, u_int = 1, u_int = 1970);
-    data(const data& d);
-    data& operator=(const data& d);
-    ~data();
+    Data(u_int = 1, u_int = 1, u_int = 1970);
+    Data(const Data& d);
+    Data& operator=(const Data& d);
+    ~Data();
 
     u_int getGiorno() const;
     u_int getMese() const;
@@ -36,17 +36,16 @@ public:
     void avanzaUnGiorno();
     
     // Operatore di incremento prefisso
-    data& operator++();
+    Data& operator++();
     // Operatore di incremento postfisso
-    data operator++(int);
+    Data operator++(int);
     // Operatore di somma
-    data operator+(int) const;
+    Data operator+(int) const;
     // Operatore di uguaglianza
-    bool operator==(const data&) const;
-
+    bool operator==(const Data&) const;
+    friend ostream& operator<<(ostream&, const Data&);
 };
 
-ostream& operator<<(ostream&, const data&);
 //la metto fuori perchè non voglio che abbia un ogg di invocazione
 //oppure è meglio mettela dentro, creare un ogg temporaneo con i dati di costruzione e poi eliminarlo?
 bool checkData(u_int g, u_int m, u_int a);
