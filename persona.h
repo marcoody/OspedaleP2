@@ -80,7 +80,8 @@ public:
     void aggiungiPaziente(const Paziente*);
     void togliPaziente(const Paziente*);
 };
-static double pagaPerOraMedico=25.0;
+
+double Medico::pagaPerOraMedico = 25.0;
 
 class Infermiere: virtual public Dipendente{
 private:
@@ -94,7 +95,8 @@ public:
     bool isResponsabile() const;
     void cambiaResponsabile(bool); //cambia lo status dell'infermiere da responsabile a "normale" e viceversa
 };
-static double pagaPerOraInf=20.0;
+
+double Infermiere::pagaPerOraInf = 20.0;
 
 class Chirurgia: public Medico, public Infermiere{
 private:
