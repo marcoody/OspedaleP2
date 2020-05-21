@@ -1,21 +1,24 @@
 #ifndef PERSONA_H
 #define PERSONA_H
-#include <string>
 #include <iostream>
 #include <istream>
 #include <fstream>
-#include "data.h"
+#include <string>
 #include <vector>
-enum giorni{lunedi=0, martedi=1, mercoledi=2, giovedi=3, venerdi=4, sabato=5, domenica=6};
-enum gender{maschio=0, femmina=1, altro=3};
+#include "data.h"
 #define u_int unsigned short
 
+using std::string;
+using std::vector;
+
+enum giorni{lunedi=0, martedi=1, mercoledi=2, giovedi=3, venerdi=4, sabato=5, domenica=6};
+enum gender{maschio=0, femmina=1, altro=3};
 
 class Persona{
 private:
     int idPersona;
-    std::string nomePersona;
-    std::string cognPersona;
+    string nomePersona;
+    string cognPersona;
     data dataNascita;
     gender genere;
 public:
@@ -24,20 +27,20 @@ public:
 
     //metodi get per i campi privati (da valutare se mettere protected)
     u_int getIdPersona();
-    std::string getNomePersona();
-    std::string getCognPersona();
+    string getNomePersona();
+    string getCognPersona();
     data getDataNascita();
     gender getGenere();
 
     //metodi per cambiare i campi privati (tutti tranne idPersona)
-    void cambiaNome(std::string&);
-    void cambiaCogn(std::string&);
-    void cambiaDataNascita(const data&);
-    void cambiaGenere(gender);
+    void setNome(string&);
+    void setCogn(string&);
+    void setDataNascita(const data&);
+    void setGenere(gender);
 
 
 protected:
-    Persona(u_int, std::string, std::string, const data& = data(), const gender& =altro);
+    Persona(u_int, string, string, const data& = data(), const gender& =altro);
     Persona(const Persona&);
 
 };
@@ -53,7 +56,7 @@ public:
     u_int numGiorniLavoro() const; //controlla il numero di giorni alla sett in cui il dipendente lavora
     void prendiPermesso(const giorni& g); //mette il giorno g in false, non lavorerà quel giorno
 protected:
-    Dipendente(u_int, std::string, std::string, const data& = data(), const gender& =altro, bool* =0);
+    Dipendente(u_int, string, string, const data& = data(), const gender& =altro, bool* =0);
     Dipendente(const Dipendente&); //??
 
 };
@@ -63,16 +66,16 @@ class Paziente; //dich incompleta per poter implementare la classe Medico
 class Medico: virtual public Dipendente{
 private:
     static double pagaPerOraMedico;
-    std::vector<const Paziente*> pazienti;
+    vector<const Paziente*> pazienti;
 public:
-    Medico(u_int, std::string, std::string, const data& = data(), const gender& =altro, bool* =0, std::vector<const Paziente*> = std::vector<const Paziente*>());
+    Medico(u_int, string, string, const data& = data(), const gender& =altro, bool* =0, vector<const Paziente*> = vector<const Paziente*>());
     Medico(const Medico&);
     Medico& operator=(const Medico&);
 
     virtual ~Medico(); //SERVE RIDEFINIRLO?
     virtual double stipendio() const;
 
-    std::vector<const Paziente*>& getPazienti();
+    vector<const Paziente*>& getPazienti();
 
     void aggiungiPaziente(const Paziente*);
     void togliPaziente(const Paziente*);
@@ -84,7 +87,7 @@ private:
     bool responsabile;
     static double pagaPerOraInf;
 public:
-    Infermiere(u_int, std::string, std::string, const data& = data(), const gender& =altro, bool* =0, bool=0);
+    Infermiere(u_int, string, string, const data& = data(), const gender& =altro, bool* =0, bool=0);
 
     virtual double stipendio() const;
 
@@ -96,8 +99,8 @@ static double pagaPerOraInf=20.0;
 class Chirurgia: public Medico, public Infermiere{
 private:
     //qui è meglio un array o un vector?
-    std::vector< const Dipendente*> equipe;
-    std::vector<const Paziente*> daOperare;
+    vector< const Dipendente*> equipe;
+    vector<const Paziente*> daOperare;
 public:
     Chirurgia(const Medico*, const Infermiere*); //??
 
@@ -113,6 +116,6 @@ private:
     bool deceduto;
     Medico* medicoAssegnato;
 public:
-    Paziente(u_int, std::string, std::string, const Medico*, const data& =data(), const gender& =altro, const data& =data(), const data& =data(), bool=0);
+    Paziente(u_int, string, string, const Medico*, const data& =data(), const gender& =altro, const data& =data(), const data& =data(), bool=0);
 };
 #endif // PERSONA_H
