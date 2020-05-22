@@ -25,11 +25,11 @@ public:
     virtual Persona* clone() const = 0;
 
     //metodi get per i campi privati (da valutare se mettere protected)
-    u_int getIdPersona();
-    string getNomePersona();
-    string getCognPersona();
-    data getDataNascita();
-    gender getGenere();
+    u_int getIdPersona() const;
+    string getNomePersona() const;
+    string getCognPersona() const;
+    data getDataNascita() const;
+    gender getGenere() const;
 
     //metodi per cambiare i campi privati (tutti tranne idPersona)
     void cambiaNome(string&);
@@ -72,7 +72,7 @@ public:
     virtual Medico* clone() const;
     virtual double stipendio() const;
 
-    vector<const Paziente*>& getPazienti();
+    vector<const Paziente*>& getPazienti() const;
 
     void aggiungiPaziente(const Paziente*);
     void togliPaziente(const Paziente*);
@@ -122,7 +122,7 @@ public:
     virtual Paziente* clone() const;
 
     Paziente(u_int, string, string, Medico*, const data& =data(), const gender& =altro, const data& =data(), const data& =data(), bool=0);
-    data getInizioRic()const;
+    data getInizioRic() const;
     data getFineRic() const;
     bool isDeceduto() const;
     Medico* getMedicoAssegnato() const;
