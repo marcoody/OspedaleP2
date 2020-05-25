@@ -14,6 +14,7 @@ using std::ostream;
 // passati così>
 
 #define u_int unsigned short
+enum giorni {lunedi=0, martedi=1, mercoledi=2, giovedi=3, venerdi=4, sabato=5, domenica=6};
 class Data {
     friend ostream& operator<<(ostream&, const Data&);
 private:
