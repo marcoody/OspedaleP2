@@ -15,6 +15,7 @@ using std::ostream;
 
 #define u_int unsigned short
 class Data {
+    friend ostream& operator<<(ostream&, const Data&);
 private:
     u_int _giorno;
     u_int _mese;
@@ -29,7 +30,6 @@ public:
     u_int getGiorno() const;
     u_int getMese() const;
     u_int getAnno() const;
-    bool isBisestile() const;
     //è meglio che ritorni un'altra data al posto di modif l'ogg di invocazione? (e renderla const)
     // <Elia: Io direi che è meglio lasciarla cosi, perché se invoco avanzaUnGiorno(), mi
     // aspetto che modifichi l'ogg d'invocazione avanzando di un giorno.>
@@ -43,9 +43,15 @@ public:
     Data operator+(int) const;
     // Operatore di uguaglianza
     bool operator==(const Data&) const;
-    friend ostream& operator<<(ostream&, const Data&);
+    //servono per calcolare il giorno della settimana in base alla data//
+    int giorniDaInizioAnno() const;
+    int giorniDal1Gen1900() const;
+    giorni giornoSettimana()const;
+    
 };
-
+//li metto fuori perchè non mi serve l'ogg di invocazione
+bool isBisestile(u_int a);
+int giorniNelMese(u_int m, u_int a);
 //la metto fuori perchè non voglio che abbia un ogg di invocazione
 //oppure è meglio mettela dentro, creare un ogg temporaneo con i dati di costruzione e poi eliminarlo?
 bool checkData(u_int g, u_int m, u_int a);
