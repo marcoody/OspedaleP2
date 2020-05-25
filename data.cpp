@@ -36,9 +36,8 @@ unsigned short Data::getGiorno() const { return _giorno; }
 unsigned short Data::getMese() const { return _mese; }
 unsigned short Data::getAnno() const { return _anno; }
 
-bool isBisestile(){
+bool isBisestile(u_int a){
   bool bisestile = false;
-  u_int a = getAnno();
   if(a % 4 == 0) {
     bisestile = true;
     if(a % 100 == 0) {
@@ -112,7 +111,7 @@ int Data::giorniDal1Gen1900() const{
     return tot-1; //conto da zero
 }
 
-giorni data::giornoSettimana() const{ return giorni(giorniDal1Gen1900()%7);}
+giorni Data::giornoSettimana() const{ return giorni(giorniDal1Gen1900()%7);}
 
 ostream &operator<<(ostream &os, const Data& d){
   return os << d._giorno << "/" << d._mese << "/" << d._anno;
