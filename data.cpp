@@ -2,14 +2,8 @@
 
 bool checkData(u_int g, u_int m, u_int a){
   if(m > 12 || g > 31) { return false; }
-  bool bisestile = false;
-  if(a % 4 == 0){
-    bisestile = true;
-    if(a % 100 == 0){
-      bisestile = false;
-      if(a % 400 == 0) { bisestile = true; }
-    }
-  }
+  bool bisestile = isBisestile(a);
+  
   if((m ==4 ||m == 6|| m == 9 || m == 11 ) && g > 30) { return false; }
   if(m == 2 && g > 29) { return false; }
   if(m == 2 && bisestile == false && g > 28) { return false; }
@@ -42,7 +36,7 @@ unsigned short Data::getGiorno() const { return _giorno; }
 unsigned short Data::getMese() const { return _mese; }
 unsigned short Data::getAnno() const { return _anno; }
 
-bool Data::isBisestile() const {
+bool isBisestile(){
   bool bisestile = false;
   u_int a = getAnno();
   if(a % 4 == 0) {
@@ -63,10 +57,10 @@ void Data::avanzaUnGiorno(){
       _giorno = 1;
       ++_mese;
     }
-    else if(_mese == 2 && _giorno == 28 && !isBisestile()){ _giorno = 1; _mese = 3; }
-    else if(_mese == 2 && _giorno == 28 && isBisestile()) { ++_giorno; }
+    else if(_mese == 2 && _giorno == 28 && !isBisestile(_anno)){ _giorno = 1; _mese = 3; }
+    else if(_mese == 2 && _giorno == 28 && isBisestile(_anno)) { ++_giorno; }
     //il fatto se sia bisestile è un controllo in più che faccio per sicurezza
-    else if(_mese == 2 && _giorno == 29 && isBisestile()) { _giorno = 1; _mese = 3; }
+    else if(_mese == 2 && _giorno == 29 && isBisestile(_anno)) { _giorno = 1; _mese = 3; }
     else if(_mese == 12 && _giorno == 31) { ++_anno; _mese = 1; _giorno = 1; }
     else{ _giorno++; }
 }
@@ -94,6 +88,31 @@ bool Data::operator==(const Data& d) const{
   return (d.getGiorno() == _giorno) && (d.getMese() == _mese) 
     && (d.getAnno() == _anno);
 }
+
+int giorniNelMese(u_int m, u_int a){
+    if(m==2 && isBisestile(a)){return 29;}
+    else if(m==2 && isBisestile(a)){return 28;}
+    else if(m==4 || m==6 || m==9 || m==11){return 30;}
+    else{return 31;}
+}
+
+int Data::giorniDaInizioAnno() const{
+    int tot=0;
+    for(u_int i=1; i<_mese; ++i){
+        tot+=giorniNelMese(i,_anno);
+    }
+    tot+=_giorno;
+    return tot;
+}
+
+int Data::giorniDal1Gen1900() const{
+    int bis=((_anno-1900)/4);
+    int tot= bis*(366)+giorniDaInizioAnno();
+    if((_anno-1900) != 0){tot+=(_anno-1900-bis)*365;}
+    return tot-1; //conto da zero
+}
+
+giorni data::giornoSettimana() const{ return giorni(giorniDal1Gen1900()%7);}
 
 ostream &operator<<(ostream &os, const Data& d){
   return os << d._giorno << "/" << d._mese << "/" << d._anno;
