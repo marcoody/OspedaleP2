@@ -53,7 +53,7 @@ u_int Ospedale::numDipendenti() const{
     return tot;
 }
 
-u_int Ospedale::numOperazioniGiorno(const data & d) const{
+u_int Ospedale::numOperazioniGiorno(const Data & d) const{
     u_int tot=0;
     for(vector<Paziente*>::const_iterator it=pazientiOsp.begin(); it!=pazientiOsp.end(); ++it){
         PazienteChir* tmp= dynamic_cast<PazienteChir*>(*it);
@@ -82,7 +82,7 @@ u_int Ospedale::numOperazioniSuccesso() const{
 vector<Paziente*>::iterator Ospedale::cercaPazienteOsp(const Paziente& p){
     for(vector<Paziente*>::iterator i=pazientiOsp.begin(); i!=pazientiOsp.end(); ++i){
         Paziente& tmp=**i;
-        if(tmp==p){return i;}
+        if(tmp==const_cast<Paziente&>(p)){return i;}
     }
     return pazientiOsp.end(); //QUI CI VA UNA SIGNAL
 }
@@ -90,7 +90,7 @@ vector<Paziente*>::iterator Ospedale::cercaPazienteOsp(const Paziente& p){
 vector<Dipendente*>::iterator Ospedale::cercaDipendenteOsp(const Dipendente& d){
     for(vector<Dipendente*>::iterator i=dipendentiOsp.begin(); i!=dipendentiOsp.end(); ++i){
         Dipendente& tmp=**i;
-        if(tmp==d){return i;}
+        if(tmp==const_cast<Dipendente&>(d)){return i;}
     }
     return dipendentiOsp.end(); //QUI CI VA UNA SIGNAL
 }
@@ -121,12 +121,12 @@ void Ospedale::rimuoviDeceduti(){
     }
 }
 
-void Ospedale::rimuoviDimessiData(const data& d){
+void Ospedale::rimuoviDimessiData(const Data& d){
     for(vector<Paziente*>::iterator i=pazientiOsp.begin(); i!=pazientiOsp.end(); ++i){
         if((*i)->getFineRic()==d){pazientiOsp.erase(i); --i;}
     }
 }
-vector<Paziente*>& Ospedale::pazientiDimessiData(const data& d){
+vector<Paziente*>& Ospedale::pazientiDimessiData(const Data& d){
     vector<Paziente*> ris;
     for(vector<Paziente*>::iterator i=pazientiOsp.begin(); i!=pazientiOsp.end(); ++i){
         if((*i)->getFineRic()==d){ris.push_back(*i);}
@@ -134,7 +134,7 @@ vector<Paziente*>& Ospedale::pazientiDimessiData(const data& d){
     return ris;
 }
 
-vector<Paziente *> &Ospedale::pazientiRicoveratiData(const data & d){
+vector<Paziente *> &Ospedale::pazientiRicoveratiData(const Data & d){
     vector<Paziente*> ris;
     for(vector<Paziente*>::iterator i=pazientiOsp.begin(); i!=pazientiOsp.end(); ++i){
         if((*i)->getInizioRic()==d){ris.push_back(*i);}
@@ -142,7 +142,7 @@ vector<Paziente *> &Ospedale::pazientiRicoveratiData(const data & d){
     return ris;
 }
 
-vector<Medico *>& Ospedale::mediciInTurno(const data & d){
+vector<Medico *>& Ospedale::mediciInTurno(const Data & d){
     vector<Medico*> ris;
     for(vector<Dipendente*>::iterator i=dipendentiOsp.begin(); i!=dipendentiOsp.end(); ++i){
         Medico* tmp= dynamic_cast<Medico*>(*i);
@@ -151,7 +151,7 @@ vector<Medico *>& Ospedale::mediciInTurno(const data & d){
     return ris;
 }
 
-vector<Infermiere *> &Ospedale::infermieriInTurno(const data &d){
+vector<Infermiere *> &Ospedale::infermieriInTurno(const Data &d){
     vector<Infermiere*> ris;
     for(vector<Dipendente*>::iterator i=dipendentiOsp.begin(); i!=dipendentiOsp.end(); ++i){
         Infermiere* tmp= dynamic_cast<Infermiere*>(*i);
@@ -185,3 +185,4 @@ double Ospedale::totaleStipendi() const{
     }
     return tot;
 }
+
