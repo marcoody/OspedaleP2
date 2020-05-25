@@ -29,7 +29,7 @@ public:
 
     u_int numPazienti() const;
     u_int numDipendenti() const;
-    u_int numOperazioniGiorno(const data&) const;
+    u_int numOperazioniGiorno(const Data&) const;
     u_int numPazientiChirurgici() const;
     u_int numOperazioniSuccesso() const;
 
@@ -42,11 +42,11 @@ public:
     void delDipendenteOsp(const Dipendente&);
 
     void rimuoviDeceduti();
-    void rimuoviDimessiData(const data&);
-    vector<Paziente*>& pazientiDimessiData(const data&);
-    vector<Paziente*>& pazientiRicoveratiData(const data&);
-    vector<Medico*>& mediciInTurno(const data&);
-    vector<Infermiere*>& infermieriInTurno(const data&);
+    void rimuoviDimessiData(const Data&);
+    vector<Paziente*>& pazientiDimessiData(const Data&);
+    vector<Paziente*>& pazientiRicoveratiData(const Data&);
+    vector<Medico*>& mediciInTurno(const Data&);
+    vector<Infermiere*>& infermieriInTurno(const Data&);
     vector<Paziente*>& pazientiAssegnatiA(Medico*);
     vector<PazienteChir*>& pazientiOperatiDa(Medico*);
 
