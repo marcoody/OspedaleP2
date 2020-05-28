@@ -369,10 +369,6 @@ void Queue<T>::pop_front() {
   }
 }
 
-std::ostream& operator<<(std::ostream& os, const Operazione& o) {
-  return os << "Operazione numero " << o.x << " - Da eseguire il " << o.d << std::endl;
-}
-
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Queue<T>& l) {
   if(!l.empty()) {
