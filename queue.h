@@ -1,8 +1,6 @@
 #ifndef Queue_H
 #define Queue_H
-#include<iostream>
 #include<exception>
-#include"data.h"
 
 class EmptyList : public std::exception {
 public:
@@ -16,16 +14,6 @@ public:
   virtual const char* what() const throw() {
     return "L'oggetto non e' stato trovato\n";
   }
-};
-
-class Operazione {
-public:
-  int x;
-  Data d;
-  Operazione() : x(0), d(1, 1, 1980) {}
-  Operazione(int n, const Data& data) : x(n), d(data) {}
-  bool operator==(const Operazione& o) { return x == o.x && d == o.d; }
-  friend ostream& operator<<(ostream&, const Operazione&);
 };
 
 // Dichiarazione incompleta
