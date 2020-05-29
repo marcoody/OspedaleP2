@@ -201,7 +201,8 @@ Infermiere &Infermiere::operator=(const Infermiere& i){
 * param m: Puntatore ad oggetto di tipo Medico
 */
 Paziente::Paziente(u_int id, string n, string c, Medico* m, const Data & dn, const gender & g, const Data & ir, const Data & fr, bool dec): Persona(id,n,c,dn,g),inizioRicovero(ir),fineRicovero(fr), deceduto(dec){
-    m->aggiungiPaziente(this);
+    medicoAssegnato=m;
+    m->pazienti.push_back(this);
 }
 Paziente::Paziente(const Paziente &p):Persona(p), inizioRicovero(p.inizioRicovero), fineRicovero(p.fineRicovero), deceduto(p.deceduto), medicoAssegnato(p.medicoAssegnato){}
 Paziente &Paziente::operator=(const Paziente& p){
