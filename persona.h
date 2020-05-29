@@ -4,11 +4,13 @@
 #include <iostream>
 #include <istream>
 #include <fstream>
+#include <sstream>
 #include "data.h"
 #include <vector>
 #include "turno.h"
-enum gender{maschio=0, femmina=1, altro=3};
-enum ErroriPersone{Err_med=0};
+enum gender{maschio=0, femmina=1, altro=2};
+std::istream& operator>>(std::istream&, gender&);
+enum ErroriPersone{Err_med=0, Err_persona};
 #define u_int unsigned short
 
 using std::string;
@@ -28,6 +30,7 @@ public:
     virtual bool operator!=(const Persona&) const;
 
     //metodi get per i campi privati (da valutare se mettere protected)
+
     u_int getIdPersona();
     string getNomePersona();
     string getCognPersona();
@@ -40,7 +43,7 @@ public:
     void cambiaDataNascita(const Data&);
     void cambiaGenere(gender);
 
-    Persona& operator=(const Persona&);
+     Persona& operator=(const Persona&);
 protected:
     Persona(u_int, string, string, const Data& = Data(), const gender& =altro);
     Persona(const Persona&);
@@ -80,8 +83,6 @@ private:
     vector<Paziente*> pazienti; //QUI VA CONST OPPURE NO??
 public:
     Medico(u_int, string, string, const Data& = Data(), const gender& =altro, const Turno& = Turno(), std::vector<Paziente*> = std::vector<Paziente*>());
-    Medico(const Medico&);
-    Medico& operator=(const Medico&);
 
     virtual ~Medico(); //SERVE RIDEFINIRLO?
     virtual Medico* clone() const;
@@ -94,7 +95,9 @@ public:
     //modifiche campi privati
     void aggiungiPaziente(Paziente*);
     void cediPaziente(Paziente*, Medico*);
-
+protected:
+    Medico(const Medico&);
+    Medico& operator=(const Medico&);
 };
 
 
@@ -108,15 +111,16 @@ private:
     static double pagaPerOraInf;
 public:
     Infermiere(u_int, string, string, const Data& = Data(), const gender& =altro, const Turno& = Turno(), bool =0);
-    Infermiere(const Infermiere&);
-    Infermiere& operator=(const Infermiere&);
 
     virtual Infermiere* clone() const;
     virtual double stipendio() const;
 
     bool isResponsabile() const;
     void cambiaResponsabile(bool); //cambia lo status dell'infermiere da responsabile a "normale" e viceversa
+protected:
 
+    Infermiere(const Infermiere&);
+    Infermiere& operator=(const Infermiere&);
 
 
 };
@@ -135,8 +139,6 @@ private:
     Medico* medicoAssegnato;
 public:
     Paziente(u_int, string, string, Medico*, const Data& =Data(), const gender& =altro, const Data& =Data(), const Data& =Data(), bool=0);
-    Paziente(const Paziente&);
-    Paziente& operator=(const Paziente&);
 
     virtual Paziente* clone() const;
     virtual ~Paziente();
@@ -151,6 +153,9 @@ public:
     void modFineRicovero(const Data&); //modifica la data di fine ricovero
     void modDeceduto(bool);
     //NON PERMETTO DI MODIFICARE IL MEDICO ASSEGANTO PERCHè LO SPOSTAMENTO è DI COMPETENZA DEI MEDICI
+protected:
+    Paziente(const Paziente&);
+    Paziente& operator=(const Paziente&);
 
 
 };
@@ -191,8 +196,6 @@ private:
 public:
 
     PazienteChir(u_int, string, string, Medico*, const Data&, Medico*, Infermiere*, Persona*,  const Data& =Data(), const gender& =altro, const Data& =Data(), const Data& =Data(), bool=0, bool=1);
-    PazienteChir(const PazienteChir&);
-    PazienteChir& operator=(const PazienteChir&);
 
     virtual PazienteChir* clone() const;
 
@@ -203,6 +206,9 @@ public:
     //metodi modifica
     void modConSuccesso(bool);
     void modParente(const Persona&);
+protected:
+    PazienteChir(const PazienteChir&);
+    PazienteChir& operator=(const PazienteChir&);
 
 };
 
