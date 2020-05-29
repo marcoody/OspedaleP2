@@ -135,8 +135,9 @@ vector<Paziente*>::iterator Medico::pazienteInLista(Paziente *p){
 }
 
 void Medico::aggiungiPaziente(Paziente *p){
-    cediPaziente(p,this);
+    (p->getMedicoAssegnato())->cediPaziente(p,this);
 }
+
 void Medico::cediPaziente(Paziente *p, Medico* m){
     if(m!=this){
         vector<Paziente*>::iterator it=pazienteInLista(p);
