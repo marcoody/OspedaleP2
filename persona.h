@@ -78,6 +78,7 @@ protected:
 //MEDICO
 class Paziente; //dich incompleta per poter implementare la classe Medico
 class Medico: public Dipendente{
+    friend Paziente;
 private:
     static double pagaPerOraMedico;
     vector<Paziente*> pazienti; //QUI VA CONST OPPURE NO??
