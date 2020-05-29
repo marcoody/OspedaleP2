@@ -30,7 +30,9 @@ void Persona::cambiaGenere(gender g){genere=g;}
 Persona::Persona(u_int id, string n, string c, const Data& d, const gender& g): idPersona(id), nomePersona(n), cognPersona(c), dataNascita(d), genere(g){};
 
 // Costruttore di copia di Persona
-Persona::Persona(const Persona& p):idPersona(p.idPersona),nomePersona(p.nomePersona), cognPersona(p.cognPersona), dataNascita(p.dataNascita), genere(p.genere){};
+Persona::Persona(const Persona& p):idPersona(p.idPersona),nomePersona(p.nomePersona), cognPersona(p.cognPersona), dataNascita(p.dataNascita), genere(p.genere){}
+
+
 Persona& Persona::operator=(const Persona& p){
    if(&p!= this){
        idPersona=p.idPersona;
@@ -86,7 +88,6 @@ Dipendente &Dipendente::operator=(const Dipendente & d){
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-
 //MEDICO:
 double Medico::pagaPerOraMedico=25.0;
 
@@ -99,7 +100,15 @@ double Medico::pagaPerOraMedico=25.0;
 * param t:  Array booleano
 * param p:  Vettore di puntatori ad oggetti di tipo Paziente
 */
-Medico::Medico(u_int id, string n, string c, const Data & d, const gender & g, const Turno& t, vector<Paziente *> p):Dipendente(id,n,c,d,g,t), pazienti(p){}
+Medico::Medico(u_int id, string n, string c, const Data & d, const gender & g, const Turno& t, vector<Paziente *> p):Dipendente(id,n,c,d,g,t){
+    if(p.empty()){pazienti=p;}
+    else{
+        for(auto it=p.begin(); it!=p.end(); ++it){
+            if((*it)->getMedicoAssegnato()!=this){throw std::runtime_error("Pazienti non assegnati a tale medico");}
+        }
+        pazienti=p;
+    }
+}
 Medico::~Medico(){ pazienti.clear();}
 Medico *Medico::clone() const{ return new Medico(*this);}
 // Costruttore di Copia di Medico
@@ -179,6 +188,7 @@ Infermiere &Infermiere::operator=(const Infermiere& i){
 
 
 //////////////////////////////////////////////////////////////////////////
+
 //PAZIENTE:
 
 /* Costruttore di paziente
@@ -192,7 +202,9 @@ Infermiere &Infermiere::operator=(const Infermiere& i){
 * param dec: Booleano
 * param m: Puntatore ad oggetto di tipo Medico
 */
-Paziente::Paziente(unsigned short id,string n, string c, Medico* m, const Data & dn, const gender & g, const Data & ir, const Data & fr, bool dec): Persona(id,n,c,dn,g),inizioRicovero(ir),fineRicovero(fr), deceduto(dec), medicoAssegnato(m) {}
+Paziente::Paziente(u_int id, string n, string c, Medico* m, const Data & dn, const gender & g, const Data & ir, const Data & fr, bool dec): Persona(id,n,c,dn,g),inizioRicovero(ir),fineRicovero(fr), deceduto(dec){
+    m->aggiungiPaziente(this);
+}
 Paziente::Paziente(const Paziente &p):Persona(p), inizioRicovero(p.inizioRicovero), fineRicovero(p.fineRicovero), deceduto(p.deceduto), medicoAssegnato(p.medicoAssegnato){}
 Paziente &Paziente::operator=(const Paziente& p){
     if(&p!=this){
@@ -200,14 +212,16 @@ Paziente &Paziente::operator=(const Paziente& p){
         inizioRicovero=p.inizioRicovero;
         fineRicovero=p.fineRicovero;
         deceduto=p.deceduto;
-        medicoAssegnato=p.medicoAssegnato;
+        medicoAssegnato->aggiungiPaziente(this);
     }
     return *this;
 }
 
+
 Paziente *Paziente::clone() const{ return new Paziente(*this);}
 
-Paziente::~Paziente(){};
+Paziente::~Paziente(){}
+
 
 Data Paziente::getInizioRic()const{ return inizioRicovero;}
 Data Paziente::getFineRic() const {return fineRicovero;}
@@ -292,4 +306,13 @@ PazienteChir& PazienteChir::operator=(const PazienteChir& o){
         parente.Persona::operator=(o.parente);
     }
     return *this;
+}
+
+std::istream &operator>>(std::istream & is,gender & g){
+    int x;
+    is>>x;
+    if(x==0){g=maschio;}
+    if(x==1){g=femmina;}
+    if(x==2){g=altro;}
+    return is;
 }
