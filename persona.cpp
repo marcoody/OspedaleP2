@@ -135,21 +135,18 @@ vector<Paziente*>::iterator Medico::pazienteInLista(Paziente *p){
 }
 
 void Medico::aggiungiPaziente(Paziente *p){
-    if(pazienteInLista(p)==pazienti.end()){
-        pazienti.push_back(p);
-        p->medicoAssegnato=this;
-    }
-    else{ std::cerr<<" Paziente già presente in lista";}
+    cediPaziente(p,this);
 }
 void Medico::cediPaziente(Paziente *p, Medico* m){
     if(m!=this){
         vector<Paziente*>::iterator it=pazienteInLista(p);
         if(it!=pazienti.end()){
-            m->aggiungiPaziente(p);
+            (*p).medicoAssegnato=m;
+            (*m).pazienti.push_back(p);
             pazienti.erase(it);
         }
+        else{std::cerr<<"Impossibile effettuare l'operazione";}
     }
-    else{std::cerr<<"Il medico di destinazione è già assegnato al paziente"<<std::endl;}
 }
 
 ///////////////////////////////////////////////////////////////////////////
