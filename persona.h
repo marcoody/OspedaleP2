@@ -6,8 +6,9 @@
 #include <fstream>
 #include "data.h"
 #include <vector>
-enum giorni{lunedi=0, martedi=1, mercoledi=2, giovedi=3, venerdi=4, sabato=5, domenica=6};
+#include "turno.h"
 enum gender{maschio=0, femmina=1, altro=3};
+enum ErroriPersone{Err_med=0};
 #define u_int unsigned short
 
 using std::string;
@@ -18,120 +19,192 @@ private:
     int idPersona;
     string nomePersona;
     string cognPersona;
-    data dataNascita;
+    Data dataNascita;
     gender genere;
 public:
     virtual ~Persona(){};
     virtual Persona* clone() const = 0;
+    virtual bool operator==(const Persona&) const;
+    virtual bool operator!=(const Persona&) const;
 
     //metodi get per i campi privati (da valutare se mettere protected)
-    u_int getIdPersona() const;
-    string getNomePersona() const;
-    string getCognPersona() const;
-    data getDataNascita() const;
-    gender getGenere() const;
+    u_int getIdPersona();
+    string getNomePersona();
+    string getCognPersona();
+    Data getDataNascita();
+    gender getGenere();
 
     //metodi per cambiare i campi privati (tutti tranne idPersona)
     void cambiaNome(string&);
     void cambiaCogn(string&);
-    void cambiaDataNascita(const data&);
+    void cambiaDataNascita(const Data&);
     void cambiaGenere(gender);
 
-
+    Persona& operator=(const Persona&);
 protected:
-    Persona(u_int, string, string, const data& = data(), const gender& =altro);
+    Persona(u_int, string, string, const Data& = Data(), const gender& =altro);
     Persona(const Persona&);
+
 
 };
 
+////////////////////////////////////////////////////////////
+
 class Dipendente: public Persona{
 private:
-    bool giorniTurno[7];
+    Turno giorniTurno;
 public:
     virtual Dipendente* clone() const=0;
     virtual double stipendio()const=0;
 
     bool inTurno(const giorni& g) const; //controlla se il giono g il dipendente è di turno, ritorna bool
-    u_int numGiorniLavoro() const; //controlla il numero di giorni alla sett in cui il dipendente lavora
-    void prendiPermesso(const giorni& g); //mette il giorno g in false, non lavorerà quel giorno
+    u_int numGiorniLavoro() const; //ritorna il numero di giorni alla sett in cui il dipendente lavora
+    void cambiaTurno(const giorni&, const giorni&); //mette il giorno g in false, non lavorerà quel giorno
+
+    void aggiungiTurno(const giorni&);
+    void eliminaTurno(const giorni&);
 protected:
-    Dipendente(u_int, string, string, const data& = data(), const gender& =altro, bool* =0);
-    Dipendente(const Dipendente&); //??
+    Dipendente(u_int, string, string, const Data& = Data(), const gender& =altro, const Turno& = Turno());
+    Dipendente(const Dipendente&);
+    Dipendente& operator=(const Dipendente&);
 
 };
 
-class Paziente; //dich incompleta per poter implementare la classe Medico
+//////////////////////////////////////////////////////////////////////////
 
-class Medico: virtual public Dipendente{
+//MEDICO
+class Paziente; //dich incompleta per poter implementare la classe Medico
+class Medico: public Dipendente{
 private:
     static double pagaPerOraMedico;
-    vector<const Paziente*> pazienti;
+    vector<Paziente*> pazienti; //QUI VA CONST OPPURE NO??
 public:
-    Medico(u_int, string, string, const data& = data(), const gender& =altro, bool* =0, std::vector<const Paziente*> = std::vector<const Paziente*>());
+    Medico(u_int, string, string, const Data& = Data(), const gender& =altro, const Turno& = Turno(), std::vector<Paziente*> = std::vector<Paziente*>());
+    Medico(const Medico&);
+    Medico& operator=(const Medico&);
+
     virtual ~Medico(); //SERVE RIDEFINIRLO?
     virtual Medico* clone() const;
     virtual double stipendio() const;
 
-    vector<const Paziente*>& getPazienti() const;
+    //metodi get
+    vector< Paziente*>& getPazienti();
+    vector<Paziente*>::iterator pazienteInLista(Paziente*);
 
-    void aggiungiPaziente(const Paziente*);
-    void togliPaziente(const Paziente*);
-protected:
-    Medico(const Medico&);
+    //modifiche campi privati
+    void aggiungiPaziente(Paziente*);
+    void cediPaziente(Paziente*, Medico*);
+
 };
-double Medico::pagaPerOraMedico=25.0;
 
-class Infermiere: virtual public Dipendente{
+
+////////////////////////////////////////////////////////////////////////
+
+//INFERMIERE:
+
+class Infermiere: public Dipendente{
 private:
     bool responsabile;
     static double pagaPerOraInf;
 public:
-    Infermiere(u_int, string, string, const data& = data(), const gender& =altro, bool* =0, bool=0);
+    Infermiere(u_int, string, string, const Data& = Data(), const gender& =altro, const Turno& = Turno(), bool =0);
+    Infermiere(const Infermiere&);
+    Infermiere& operator=(const Infermiere&);
+
     virtual Infermiere* clone() const;
     virtual double stipendio() const;
 
     bool isResponsabile() const;
     void cambiaResponsabile(bool); //cambia lo status dell'infermiere da responsabile a "normale" e viceversa
 
-protected:
-    Infermiere(const Infermiere&);
-};
-double Infermiere::pagaPerOraInf=20.0;
 
-class Chirurgia: public Medico, public Infermiere{
-private:
-    //qui è meglio un array o un vector?
-    Medico* medChirurgia;
-    Infermiere* infChirurgia;
-    vector<const Paziente*> daOperare;
-public:
-    Chirurgia( u_int, string, string, u_int, string, string, const data& = data(), const gender& =altro, bool* =0, vector<const Paziente*> = vector<const Paziente*>(),const data& = data(), const gender& =altro, bool* =0, bool=0, vector<const Paziente*> = vector<const Paziente*> ());
 
-    void cambiaEquipe(const Medico* =0, const Infermiere* =0);
-    void addPazienteDaOperare(const Paziente*);
-    void delPazienteDaOperare(const Paziente*);
 };
+
+
+///////////////////////////////////////////////////////////////////
+
+//PAZIENTE:
 
 class Paziente: public Persona{
+    friend Medico;
 private:
-    data inizioRicovero;
-    data fineRicovero;
+    Data inizioRicovero;
+    Data fineRicovero;
     bool deceduto;
     Medico* medicoAssegnato;
 public:
-    virtual Paziente* clone() const;
+    Paziente(u_int, string, string, Medico*, const Data& =Data(), const gender& =altro, const Data& =Data(), const Data& =Data(), bool=0);
+    Paziente(const Paziente&);
+    Paziente& operator=(const Paziente&);
 
-    Paziente(u_int, string, string, Medico*, const data& =data(), const gender& =altro, const data& =data(), const data& =data(), bool=0);
-    data getInizioRic() const;
-    data getFineRic() const;
+    virtual Paziente* clone() const;
+    virtual ~Paziente();
+
+    //metodi get:
+    Data getInizioRic()const;
+    Data getFineRic() const;
     bool isDeceduto() const;
     Medico* getMedicoAssegnato() const;
 
-    void modFineRicovero(const data&); //modifica la data di fine ricovero
+
+    void modFineRicovero(const Data&); //modifica la data di fine ricovero
     void modDeceduto(bool);
-    void modMedicoAssegnato(Medico*);
-protected:
-    Paziente(const Paziente&);
+    //NON PERMETTO DI MODIFICARE IL MEDICO ASSEGANTO PERCHè LO SPOSTAMENTO è DI COMPETENZA DEI MEDICI
+
 
 };
+
+/////////////////////////////////////////////////////
+
+//OPERAZIONE:
+class Operazione{
+private:
+    Data dataOp;
+    Medico* medOp;
+    Infermiere* infOp;
+public:
+    Operazione(const Data&, Medico*, Infermiere*);
+
+    Data getDataOp() const;
+    Medico* getMedOp() const;
+    Infermiere* getInfOp() const;
+
+    void modDataOp(const Data&);
+    void modMedOp(Medico*);
+    void modInfOp(Infermiere*);
+
+    bool operator==(const Operazione&) const;
+protected:
+    Operazione(const Operazione&);
+    Operazione& operator=(const Operazione&);
+};
+
+////////////////////////////////////////////////////////////////////
+
+//PAZIENTE CHIRURGICO:
+
+class PazienteChir: public Paziente, public Operazione{
+private:
+    bool conSuccesso;
+    Persona& parente;
+public:
+
+    PazienteChir(u_int, string, string, Medico*, const Data&, Medico*, Infermiere*, Persona*,  const Data& =Data(), const gender& =altro, const Data& =Data(), const Data& =Data(), bool=0, bool=1);
+    PazienteChir(const PazienteChir&);
+    PazienteChir& operator=(const PazienteChir&);
+
+    virtual PazienteChir* clone() const;
+
+    //metodi get
+    bool getConSuccesso() const;
+    Persona& getParente() const;
+
+    //metodi modifica
+    void modConSuccesso(bool);
+    void modParente(const Persona&);
+
+};
+
+
 #endif // PERSONA_H
