@@ -118,7 +118,7 @@ int contaCifre(int a){
 }
 bool checkData(u_int g, u_int m, u_int a){
   if(m > 12 || g > 31) { return false; }
-  //controllo che gli anni siano scritti nella maniera corretta cioè AAAA oppure AA
+  //controllo che gli anni siano scritti nella maniera corretta cioè AAAA
   int cifre=contaCifre(a);
   if(cifre==3 || cifre==1 || cifre>4){return false;}
   bool bisestile = isBisestile(a);
@@ -141,7 +141,19 @@ ostream &operator<<(ostream &os, const giorni &g){
     if(g==4){return os<<"venerdi";}
     if(g==5){return os<<"sabato";}
     if(g==6){return os<<"domenica";}
+    else {return os;}
 }
 
+std::istream& operator >>(std::istream& is, Data& d){
+    int day, month, year;
+    char ch1, ch2;
+    if(is >> day >> ch1 >> month >> ch2 >> year){
+        if (ch1 == '/' && ch2 == '/')
+            d=Data(day, month, year);
+        else
+            is.setstate(std::ios::failbit);
+    }
+    return is;
+}
 
 
