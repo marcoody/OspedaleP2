@@ -12,6 +12,7 @@ enum giorni {lunedi=0, martedi=1, mercoledi=2, giovedi=3, venerdi=4, sabato=5, d
 
 class Data {
     friend ostream& operator<<(ostream&, const Data&);
+    friend std::istream& operator>>(std::istream& in, Data& d);
 private:
     u_int _giorno;
     u_int _mese;
@@ -51,4 +52,5 @@ int contaCifre(int a);
 bool checkData(u_int g, u_int m, u_int a);
 ostream& operator<<(ostream&, const Data&);
 ostream& operator<<(ostream&, const giorni&);
+std::istream& operator>>(std::istream& in, Data& d);
 #endif // DATA_H
