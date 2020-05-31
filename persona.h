@@ -8,9 +8,13 @@
 #include "data.h"
 #include <vector>
 #include "turno.h"
+#include "eccezioni.h"
+
 enum gender{maschio=0, femmina=1, altro=2};
 std::istream& operator>>(std::istream&, gender&);
 enum ErroriPersone{Err_med=0, Err_persona};
+
+
 #define u_int unsigned short
 
 using std::string;
@@ -75,16 +79,46 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-//MEDICO
-class Paziente; //dich incompleta per poter implementare la classe Medico
+//PAZIENTE:
+class Medico;
+class Paziente: public Persona{
+    friend Medico;
+private:
+    Data inizioRicovero;
+    Data fineRicovero;
+    bool deceduto;
+    Medico* medicoAssegnato;
+public:
+    Paziente(u_int, string, string, Medico*, const Data& =Data(), const gender& =altro, const Data& =Data(), const Data& =Data(), bool=0);
+
+    virtual Paziente* clone() const;
+    virtual ~Paziente();
+
+    //metodi get:
+    Data getInizioRic()const;
+    Data getFineRic() const;
+    bool isDeceduto() const;
+    Medico* getMedicoAssegnato() const;
+
+
+    void modFineRicovero(const Data&); //modifica la data di fine ricovero
+    void modDeceduto(bool);
+    //NON PERMETTO DI MODIFICARE IL MEDICO ASSEGANTO PERCHè LO SPOSTAMENTO è DI COMPETENZA DEI MEDICI
+protected:
+    Paziente(const Paziente&);
+    Paziente& operator=(const Paziente&);
+
+
+};
+/////////////////////////////////////////////////////////////////////////
+//MEDICO:
 class Medico: public Dipendente{
-    friend Paziente;
 private:
     static double pagaPerOraMedico;
     vector<Paziente*> pazienti; //QUI VA CONST OPPURE NO??
 public:
     Medico(u_int, string, string, const Data& = Data(), const gender& =altro, const Turno& = Turno(), std::vector<Paziente*> = std::vector<Paziente*>());
-
+    friend Paziente::Paziente(u_int, string, string, Medico*, const Data&, const gender&, const Data&, const Data& , bool);
     virtual ~Medico(); //SERVE RIDEFINIRLO?
     virtual Medico* clone() const;
     virtual double stipendio() const;
@@ -94,8 +128,9 @@ public:
     vector<Paziente*>::iterator pazienteInLista(Paziente*);
 
     //modifiche campi privati
-    void aggiungiPaziente(Paziente*);
     void cediPaziente(Paziente*, Medico*);
+    void aggiungiPaziente(Paziente*);
+    void eliminaPaziente(Paziente*); //elimina definitivamente un paziente
 protected:
     Medico(const Medico&);
     Medico& operator=(const Medico&);
@@ -129,37 +164,7 @@ protected:
 
 ///////////////////////////////////////////////////////////////////
 
-//PAZIENTE:
 
-class Paziente: public Persona{
-    friend Medico;
-private:
-    Data inizioRicovero;
-    Data fineRicovero;
-    bool deceduto;
-    Medico* medicoAssegnato;
-public:
-    Paziente(u_int, string, string, Medico*, const Data& =Data(), const gender& =altro, const Data& =Data(), const Data& =Data(), bool=0);
-
-    virtual Paziente* clone() const;
-    virtual ~Paziente();
-
-    //metodi get:
-    Data getInizioRic()const;
-    Data getFineRic() const;
-    bool isDeceduto() const;
-    Medico* getMedicoAssegnato() const;
-
-
-    void modFineRicovero(const Data&); //modifica la data di fine ricovero
-    void modDeceduto(bool);
-    //NON PERMETTO DI MODIFICARE IL MEDICO ASSEGANTO PERCHè LO SPOSTAMENTO è DI COMPETENZA DEI MEDICI
-protected:
-    Paziente(const Paziente&);
-    Paziente& operator=(const Paziente&);
-
-
-};
 
 /////////////////////////////////////////////////////
 
