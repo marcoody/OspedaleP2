@@ -1,51 +1,71 @@
-#ifndef Queue_H
-#define Queue_H
-#include<exception>
+#ifndef QUEUE_H
+#define QUEUE_H
+#include <iostream>
+#include <string>
+#include <exception>
+#include <type_traits>
 
-class EmptyList : public std::exception {
-public:
-  virtual const char* what() const throw() {
-    return "Lista vuota, impossibile effettuare l'operazione richiesta";
-  }
+class Queue_Exception : public std::exception {
+  private:
+    std::string error_msg;
+    int error_number;
+  public:
+    Queue_Exception(const std::string& err_msg, int err_num) :
+      error_msg(err_msg),
+      error_number(err_num) {}
+    virtual const char* what() const throw() {
+      std::string error = "Error " + std::to_string(error_number) + ": " + error_msg;
+      return error.c_str();
+    };
 };
 
-class NotFound : public std::exception {
-public:
-  virtual const char* what() const throw() {
-    return "L'oggetto non e' stato trovato\n";
-  }
-};
-
-// Dichiarazione incompleta
+/// Dichiarazione incompleta
 template <typename T> class Queue;
 // Dichiarazione incompleta
 template <typename T> std::ostream& operator<<(std::ostream&, const Queue<T>&);
 
 template <typename T>
 class Queue {
-  friend class iterator;
   private:
     class Nodo;
     class SmartP {
       public:
         Nodo* punt;
-        SmartP(Nodo* p = nullptr);
-        SmartP(const SmartP&);
+        SmartP(Nodo* p = nullptr) : punt(p) { if(punt) punt->riferimenti++; }
+        SmartP(const SmartP& s) : punt(s.punt) { if(punt) punt->riferimenti++; };
         ~SmartP();
         SmartP& operator=(const SmartP&);
-        Nodo& operator*() const;
-        Nodo* operator->() const;
-        bool operator==(const SmartP&) const;
-        bool operator!=(const SmartP&) const;
+        Nodo& operator*() const { return *punt; }
+        Nodo* operator->() const { return punt; }
+        bool operator==(const SmartP& s) const { return punt == s.punt; }
+        bool operator!=(const SmartP& s) const { return !(punt == s.punt); }
     };
     class Nodo {
       public:
-        Nodo(const T& = T(), const SmartP& = nullptr, const SmartP& = nullptr);
-        Nodo(const Nodo&);
-        ~Nodo();
+        Nodo(const T& t = T(), const SmartP& n = nullptr, const SmartP& p = nullptr) : info(t), next(n), prec(p), riferimenti(0) { _size++; }
+        Nodo(const Nodo& n) : info(n.info), next(n.next), prec(n.prec), riferimenti(n.riferimenti) {}
+        ~Nodo() { --_size; };
         T info;
         SmartP next, prec;
-        int riferimenti;
+        unsigned int riferimenti;
+    };
+    template <bool C = true>
+    class Base_Iterator {
+      friend class Queue<T>;
+      private:
+        Nodo* iter;
+        typedef typename std::conditional<C, const T, T>::type value_type;
+      public:
+        Base_Iterator() : iter(nullptr) {}
+        Base_Iterator(const Base_Iterator<false>& b) : iter(b.iter) {}
+        Base_Iterator operator++(int);
+        Base_Iterator operator--(int);
+        Base_Iterator& operator++();
+        Base_Iterator& operator--();
+        bool operator==(const Base_Iterator& b) const { return iter == b.iter; }
+        bool operator!=(const Base_Iterator& b) const { return !(iter == b.iter); }
+        value_type& operator*() const { return iter->info; }
+        value_type* operator->() const { return &iter->info; }
     };
     SmartP first;
     SmartP last;
@@ -64,18 +84,21 @@ class Queue {
         iterator operator--(int); // Postfisso
         T& operator*() const;
     };
+    // Iteratori
+    typedef Base_Iterator<false> iterator;
+    typedef Base_Iterator<true> const_iterator;
     // Costruttore
-    Queue();
+    Queue() : first(nullptr), last(nullptr) {};
     // Operatori
-    T& operator[](const iterator&) const;
+    template <bool C> T& operator[](const Base_Iterator<C>& b) const { return b.iter->info; };
+    T& operator[](int) const;
     // Metodi
-    unsigned int size() const;
-    bool empty() const;
+    unsigned int size() const { return _size; }
+    bool empty() const { return _size == 0; }
     iterator begin() const;
     iterator end() const;
-    iterator pastTheEnd() const;
-    iterator insert(const iterator&, const T&);
-    iterator erase(const iterator&);
+    template <bool C> iterator insert(const Base_Iterator<C>&, const T&);
+    template <bool C> iterator erase(const Base_Iterator<C>&);
     iterator find(const T&) const;
     void clear();
     void push_back(const T&);
@@ -86,18 +109,6 @@ class Queue {
 };
 
 /* Metodi si SmartP */
-
-// Costruttore
-template <typename T>
-Queue<T>::SmartP::SmartP(Nodo* p) : punt(p) {
-  if(punt) punt->riferimenti++;
-}
-
-// Costruttore di copia
-template <typename T>
-Queue<T>::SmartP::SmartP(const SmartP& s) : punt(s.punt) {
-  if(punt) punt->riferimenti++;
-}
 
 // Distruttore
 template <typename T>
@@ -111,7 +122,6 @@ Queue<T>::SmartP::~SmartP() {
 // Oeratore di assegnazione
 template <typename T>
 typename Queue<T>::SmartP& Queue<T>::SmartP::operator=(const SmartP& s) {
-
   if(this != &s) {
     Nodo *t = punt;
     punt = s.punt;
@@ -124,140 +134,92 @@ typename Queue<T>::SmartP& Queue<T>::SmartP::operator=(const SmartP& s) {
   return *this;
 }
 
-// Operatore di dereferenziazione
-template <typename T>
-typename Queue<T>::Nodo& Queue<T>::SmartP::operator*() const { return *punt; }
-
-// Operatore di selezione membro
-template <typename T>
-typename Queue<T>::Nodo* Queue<T>::SmartP::operator->() const { return punt; }
-
-// Operatore di uguaglianza
-template <typename T>
-bool Queue<T>::SmartP::operator==(const SmartP& s) const { return punt == s.punt; }
-
-// Operatore di disuguaglianza
-template <typename T>
-bool Queue<T>::SmartP::operator!=(const SmartP& s) const { return punt != s.punt; }
-
-/* Metodi di Nodo */
-
-// Ccostruttore
-template <typename T>
-Queue<T>::Nodo::Nodo(const T& t, const SmartP& n, const SmartP& p) : info(t), next(n), prec(p), riferimenti(0) {
-  ++_size;
-}
-
-template <typename T>
-Queue<T>::Nodo::Nodo(const Nodo& n) : info(n.info), next(n.next), prec(n.prec), riferimenti(n.riferimenti) {}
-
-// Distruttore
-template <typename T>
-Queue<T>::Nodo::~Nodo() { --_size; }
-
-/* Metodi di iterator */
-
-// Operatore di dereferenziazione
-template <typename T>
-T& Queue<T>::iterator::operator*() const { return iter->info; }
-
-// Operatore di uguaglianza
-template <typename T>
-bool Queue<T>::iterator::operator==(const iterator& i) const { return iter == i.iter; }
-
-// Operatore di disuguaglianza
-template <typename T>
-bool Queue<T>::iterator::operator!=(const iterator& i) const { return iter != i.iter; }
+/* Metodi di Base_Iterator */
 
 // Operatore di incremento prefisso
 template <typename T>
-typename Queue<T>::iterator& Queue<T>::iterator::operator++() {
-  if(iter != 0) iter = iter->next;
+template <bool C>
+typename Queue<T>::template Base_Iterator<C>& Queue<T>::Base_Iterator<C>::operator++() {
+  if(iter != 0) iter = (iter->next).punt;
   return *this;
 }
 
 // Operatore di incremento postfisso
 template <typename T>
-typename Queue<T>::iterator Queue<T>::iterator::operator++(int) {
-  iterator aux = *this;
-  if(iter != 0) iter = iter->next;
+template <bool C>
+typename Queue<T>::template Base_Iterator<C> Queue<T>::Base_Iterator<C>::operator++(int) {
+  const Base_Iterator<C> aux(*this);
+  if(iter != 0) iter = (iter->next).punt;
   return aux;
 }
 
 // Operatore di decremento prefisso
 template <typename T>
-typename Queue<T>::iterator& Queue<T>::iterator::operator--() {
-  if(iter != 0) iter = iter->prec;
+template <bool C>
+typename Queue<T>::template Base_Iterator<C>& Queue<T>::Base_Iterator<C>::operator--() {
+  if(iter != 0) iter = (iter->prec).punt;
   return *this;
 }
 
 // Operatore di decremento postfisso
 template <typename T>
-typename Queue<T>::iterator Queue<T>::iterator::operator--(int) {
-  iterator aux = *this;
-  if(iter != 0) iter = iter->prec;
+template <bool C>
+typename Queue<T>::template Base_Iterator<C> Queue<T>::Base_Iterator<C>::operator--(int) {
+  const Base_Iterator<C> aux(*this);
+  if(iter != 0) iter = (iter->prec).punt;
   return aux;
 }
 
 /* Metodi di Queue */
 
-// Costruttore
-template <typename T>
-Queue<T>::Queue() : first(nullptr), last(nullptr) {}
-
 // Dimensione della coda
 template <typename T>
 unsigned int Queue<T>::_size = 0;
 
-// OPERATORI
 template <typename T>
-T& Queue<T>::operator[](const iterator& i) const { return (i.iter)->info; }
-
-template <typename T>
-unsigned int Queue<T>::size() const { return _size; }
-
-template <typename T>
-bool Queue<T>::empty() const { return _size == 0; }
+T& Queue<T>::operator[](int n) const {
+  const_iterator it;
+  for(it = begin(); it != end() && n > 0; ++it, --n) {}
+  return (it.iter)->info;
+}
 
 template <typename T>
 typename Queue<T>::iterator Queue<T>::begin() const {
   iterator aux;
-  aux.iter = first;
+  aux.iter = first.punt;
   return aux;
 }
 
 template <typename T>
 typename Queue<T>::iterator Queue<T>::end() const {
   iterator aux;
-  aux.iter = last;
-  return aux;
-}
-
-template <typename T>
-typename Queue<T>::iterator Queue<T>::pastTheEnd() const {
-  iterator aux;
   aux.iter = nullptr;
   return aux;
 }
 
 template <typename T>
-typename Queue<T>::iterator Queue<T>::insert(const iterator& it, const T& item) {
-  if(first == nullptr || it.iter == first) {
+template <bool C>
+typename Queue<T>::iterator Queue<T>::insert(const Queue<T>::Base_Iterator<C>& it, const T& item) {
+  if(first == nullptr || it.iter == first.punt) {
     push_front(item);
     return begin();
-  } else if(it.iter == last) {
+  } else if(it.iter == nullptr) {
     push_back(item);
-    return end();
+    iterator aux;
+    aux.iter = last.punt;
+    return aux;
   } else {
     try {
-      SmartP q = first;
+      SmartP out = first, in;
       iterator aux;
-      while(q != nullptr && !(it.iter == q)) q = q->next;
-      if(q == nullptr) throw NotFound();
-      else q = new Nodo(item, q, q->prec);
-      aux.iter = q;
+      while(out != nullptr && !(it.iter == out.punt)) out = out->next;
+      if(out == nullptr) throw Queue_Exception("Element was not found", -1);
+      in = new Nodo(item, out, out->prec);
+      (out->prec)->next = in;
+      out->prec = in;
+      aux.iter = in.punt;
       return aux;
-    } catch(std::exception& e) {
+    } catch(const Queue_Exception& e) {
       std::cout << e.what() << std::endl;
       return begin();
     }
@@ -265,53 +227,69 @@ typename Queue<T>::iterator Queue<T>::insert(const iterator& it, const T& item) 
 }
 
 template <typename T>
-typename Queue<T>::iterator Queue<T>::erase(const iterator& it) {
+template <bool C>
+typename Queue<T>::iterator Queue<T>::erase(const Queue<T>::Base_Iterator<C>& it) {
   try {
-    if(empty()) throw EmptyList();
-  } catch(std::exception& e) {
+    if(empty()) throw Queue_Exception("Cannot delete element, queue is empty", 0);
+    else {
+      if(it.iter == first.punt) {
+        pop_front();
+        return begin();
+      } else if(it.iter == last.punt) {
+        pop_back();
+        iterator aux;
+        aux.iter = last.punt;
+        return aux;
+      } else {
+        try {
+          SmartP del = first;
+          iterator aux;
+          while(del != nullptr && !(it.iter == del.punt)) del = del->next;
+          if(del == nullptr) throw Queue_Exception("An invalid iterator was provided", 2);
+          else {
+            SmartP prec = del->prec, next = del->next;
+            del->prec = del->next = nullptr;
+            prec->next = next;
+            next->prec = prec;
+            aux.iter = next.punt;
+            return aux;
+          }
+        } catch(const Queue_Exception& e) {
+          std::cout << e.what() << std::endl;
+          return end();
+        }
+      }
+    }
+  } catch(const Queue_Exception& e) {
     std::cout << e.what() << std::endl;
     return end();
-  }
-  if(it.iter == first) {
-    pop_front();
-    return begin();
-  } else if(it.iter == last) {
-    pop_back();
-    return end();
-  } else {
-    try {
-      SmartP q = first;
-      iterator aux;
-      while(q != nullptr && !(it.iter == q)) q = q->next;
-      if(q == nullptr) throw NotFound();
-      else {
-        (q->prec)->next = q->next;
-        aux.iter = q->next;
-        return aux;
-      }
-    } catch(std::exception& e) {
-      std::cout << e.what() << std::endl;
-      return end();
-    }
   }
 }
 
 template <typename T>
 typename Queue<T>::iterator Queue<T>::find(const T& key) const {
   iterator it;
-  for(it = begin(); it != pastTheEnd() && !(*(it) == key); ++it) {}
-  if(it == pastTheEnd()) return pastTheEnd();
+  for(it = begin(); it != end() && !(it.iter->info == key); ++it) {}
+  if(it == end()) return end();
   else return it;
 }
 
 template <typename T>
 void Queue<T>::clear() {
   try {
-    if(empty()) throw EmptyList();
+    if(empty()) throw Queue_Exception("The queue cannot be deleted as it's empty", 3);
     else {
-      while(first != nullptr) pop_front();
+      SmartP q = first->next;
+      last = nullptr;
+      while(q != nullptr) {
+        first->next = nullptr;
+        q->prec = nullptr;
+        first = q;
+        q = q->next;
+      }
+      first = nullptr;
     }
-  } catch(std::exception& e) {
+  } catch(const Queue_Exception& e) {
     std::cout << e.what() << std::endl;
     return;
   }
@@ -329,17 +307,15 @@ void Queue<T>::push_back(const T& item) {
 template <typename T>
 void Queue<T>::pop_back() {
   try {
-    if(empty()) throw EmptyList();
-    else {
-      if(last->prec == nullptr) first = last = nullptr;
-      else {
-        (last->prec)->next = nullptr;
-        last = last->prec;
-      }
-    }
-  } catch(std::exception& e) {
+    if(empty()) throw Queue_Exception("Unable to remove item from the queue, queue is empty", 4);
+  } catch(const Queue_Exception& e) {
     std::cout << e.what() << std::endl;
     return;
+  }
+  if(last->prec == nullptr) first = last = nullptr;
+  else {
+    (last->prec)->next = nullptr;
+    last = last->prec;
   }
 }
 
@@ -355,29 +331,27 @@ void Queue<T>::push_front(const T& item) {
 template <typename T>
 void Queue<T>::pop_front() {
   try {
-    if(empty()) throw EmptyList();
-    else {
-      if(first->next == nullptr) first = last = nullptr;
-      else {
-        (first->next)->prec = nullptr;
-        first = first->next;
-      }
-    }
-  } catch(std::exception& e) {
+    if(empty()) throw Queue_Exception("Unable to remove item from the queue, the list is empty", 4);
+  } catch(const Queue_Exception& e) {
     std::cout << e.what() << std::endl;
     return;
+  }
+  if(first->next == nullptr) first = last = nullptr;
+  else {
+    (first->next)->prec = nullptr;
+    first = first->next;
   }
 }
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const Queue<T>& l) {
-  if(!l.empty()) {
-    os << l.size() << " elementi memorizzati:\n" << std::endl;
+std::ostream& operator<<(std::ostream& os, const Queue<T>& q) {
+  if(!q.empty()) {
+    os << q.size() << " elementi memorizzati:\n" << std::endl;
     int i = 1;
-    for(typename Queue<T>::iterator it = l.begin(); it != l.pastTheEnd(); ++it) {
-      os << i++ << ") " << l[it] << std::endl;
+    for(typename Queue<T>::const_iterator it = q.begin(); it != q.end(); ++it) {
+      os << i++ << ") " << q[it] << std::endl;
     }
-  } else os << "Nessuna elemento memorizzato" << std::endl;
+  } else os << "Nessun elemento memorizzato" << std::endl;
   return os;
 }
 
