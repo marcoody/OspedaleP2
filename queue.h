@@ -71,19 +71,6 @@ class Queue {
     SmartP last;
     static unsigned int _size;
   public:
-    class iterator {
-      friend class Queue<T>;
-      private:
-        SmartP iter;
-      public:
-        bool operator==(const iterator&) const;
-        bool operator!=(const iterator&) const;
-        iterator& operator++();   // Prefisso
-        iterator operator++(int); // Postfisso
-        iterator& operator--();   // Prefisso
-        iterator operator--(int); // Postfisso
-        T& operator*() const;
-    };
     // Iteratori
     typedef Base_Iterator<false> iterator;
     typedef Base_Iterator<true> const_iterator;
