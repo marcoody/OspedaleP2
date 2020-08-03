@@ -3,7 +3,7 @@
 
 
 
-Persona::Persona(string user, string pw, string no, string co, const Data& d, const gender& g): username(user), password(pw), nome(no), cognome(co), dataNascita(d), genere(g){}
+Persona::Persona(string user, string pw, string no, string co, const Data& d, const gender& g, const QueueTurni& t): username(user), password(pw), nome(no), cognome(co), dataNascita(d), genere(g), turni(t){}
 
 string Persona::getUsername() const { return username; }
 string Persona::getPassword() const { return password; }
@@ -11,12 +11,15 @@ string Persona::getNome() const { return nome; }
 string Persona::getCognome() const { return cognome; }
 Data Persona::getDataNascita() const { return dataNascita; }
 gender Persona::getGenere() const { return genere; }
+QueueTurni Persona::getTurni() const{ return turni; }
 
 void Persona::setPassword(string& pw) { password=pw; }
 void Persona::setNome(string& n) { nome=n; }
 void Persona::setCognome(string& c) { cognome=c; }
 void Persona::setDataNascita(const Data& d) { dataNascita=d; }
 void Persona::setGenere(gender g) { genere=g; }
+
+
 
 void Persona::exportXml(QXmlStreamWriter& out) const{
     //getTag polimorfa

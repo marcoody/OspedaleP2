@@ -2,13 +2,11 @@
 
 string Medico::getTag() const {return "MEDICO";}
 
-Medico::Medico(string user, string pw, string no, string co, const Data& d, const gender& g, string rep, bool chir,const QueueTurni& t): Persona(user, pw, no, co, d, g), reparto(rep), chirurgo(chir), turni(t) {}
+Medico::Medico(string user, string pw, string no, string co, const Data& d, const gender& g, string rep, bool chir,const QueueTurni& t): Persona(user, pw, no, co, d, g, t), reparto(rep), chirurgo(chir){}
 
 //get
 string Medico::getReparto() const {return reparto; }
 bool Medico::isChirurgo() const { return chirurgo; }
-
-QueueTurni Medico::getTurni() const{ return turni;}
 
 //set
 void Medico::setReparto(string& r) { reparto=r; }

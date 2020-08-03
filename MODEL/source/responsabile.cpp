@@ -2,7 +2,7 @@
 
 string Responsabile::getTag() const { return "RESPONSABILE"; }
 
-Responsabile::Responsabile(string user, string pw, string no, string co, const Data& d, const gender& g): Persona(user, pw, no, co, d, g){}
+Responsabile::Responsabile(string user, string pw, string no, string co, const Data& d, const gender& g, const QueueTurni& t): Persona(user, pw, no, co, d, g, t){}
 
 //permessi
 bool Responsabile::isResponsabile() const {return true;}

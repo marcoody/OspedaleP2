@@ -9,7 +9,7 @@ private:
 
     virtual string getTag() const;
 public:
-    Responsabile(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro);
+    Responsabile(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, const QueueTurni& = QueueTurni());
 
     //permessi
     virtual bool isResponsabile() const;

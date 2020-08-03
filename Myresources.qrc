@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/new/prefix1"/>
+    <qresource prefix="/">
+        <file>IMG/admin.svg</file>
+        <file>IMG/dialog.svg</file>
+        <file>IMG/error.svg</file>
+        <file>IMG/icona.svg</file>
+        <file>IMG/info.svg</file>
+        <file>IMG/login.png</file>
+        <file>IMG/warning.svg</file>
+        <file>IMG/ospedale.png</file>
+    </qresource>
+</RCC>

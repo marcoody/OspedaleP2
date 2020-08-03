@@ -3,6 +3,7 @@
 #include <string>
 #include <QXmlStreamWriter>
 #include "data.h"
+#include "queueturni.h"
 
 enum gender{maschio=0, femmina=1, altro=2};
 
@@ -18,11 +19,13 @@ private:
     string cognome;
     Data dataNascita;
     gender genere;
+    //coda di turni
+    QueueTurni turni;
 
     virtual string getTag() const = 0;
 public:
 
-    Persona(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro);
+    Persona(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, const QueueTurni& = QueueTurni());
 
     //metodi get per i campi privati (da valutare se mettere protected)
 
@@ -32,6 +35,8 @@ public:
     string getCognome() const;
     Data getDataNascita() const;
     gender getGenere() const;
+    //metodo per avere turni
+    QueueTurni getTurni() const;
 
     //metodi per cambiare i campi privati (tutti tranne username)
     void setPassword(string&);
@@ -40,13 +45,14 @@ public:
     void setDataNascita(const Data&);
     void setGenere(gender);
 
+
     //permessi
     virtual bool isResponsabile() const=0;
     virtual bool canAddTurni() const=0;
     virtual bool canEditTurni() const=0;
 
     //virtuali
-    virtual ~Persona(){};
+    virtual ~Persona(){}
     virtual Persona* clone() const = 0;
 
     //Import export

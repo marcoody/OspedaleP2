@@ -3,14 +3,12 @@
 #include <string>
 #include <QXmlStreamWriter>
 #include "persona.h"
-#include "queueturni.h"
 using std::string;
 
 class Medico: public Persona{
 private:
     string reparto;
     bool chirurgo;
-    QueueTurni turni;
 
     virtual string getTag() const;
 public:
@@ -19,7 +17,6 @@ public:
     //get
     string getReparto() const;
     bool isChirurgo() const;
-    QueueTurni getTurni() const;
 
     //set
     void setReparto(string&);
