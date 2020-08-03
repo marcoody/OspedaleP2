@@ -66,7 +66,7 @@ std::string Data::dataToString() const{
     return getGiornoString()+"/"+getMeseString()+"/"+getAnnoString();
 }
 
-Data& stringToData(std::string s){
+Data stringToData(std::string s){
     int g,m,a;
     const char* c= s.c_str();
     sscanf(c,"%2d/%2d/%4d", &g, &m, &a);

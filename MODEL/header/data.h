@@ -56,7 +56,7 @@ int giorniNelMese(u_int m, u_int a);
 //la metto fuori perchè non voglio che abbia un ogg di invocazione
 int contaCifre(int a);
 bool checkData(u_int g, u_int m, u_int a);
-Data& stringToData(std::string);
+Data stringToData(std::string);
 ostream& operator<<(ostream&, const Data&);
 ostream& operator<<(ostream&, const giorni&);
 std::istream& operator>>(std::istream& in, Data& d);

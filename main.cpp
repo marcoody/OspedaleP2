@@ -12,6 +12,7 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
 
     QueuePersone listaUtenti;
+
     if(!listaUtenti.importXml())
     {
         listaUtenti.defaultData();
@@ -23,6 +24,16 @@ int main(int argc, char **argv)
         info.exec();
     }
 
+    //listaUtenti.push_back(new Medico("dio", "cane", "porco", "schifoso", Data(), gender::maschio));
+/*
+    QString* result = new QString();
+    QXmlStreamWriter out(result);
+    listaUtenti.exportXmlData(out);
+    QFile output("dioporco.xml");
+    output.open(QIODevice::WriteOnly);
+    output.write(result->toStdString().c_str(), result->length());
+    output.close();
+*/
     Persona* loginUser=0;
     Login* login = new Login(listaUtenti, &loginUser);
 

@@ -28,6 +28,7 @@ public:
     void changePassword(Persona*, string);
     bool importXml();
     void defaultData();
+
 };
 
 #endif // QUEUEPERSONE_H
