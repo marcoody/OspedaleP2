@@ -10,7 +10,7 @@ private:
     double paga_straordinario;
     static const int r = 204, g = 51, b = 255;
 public:
-    Turno_straordinario(Data&, u_int, string, bool , bool , double=16.0 );
+    Turno_straordinario(giorni, u_int = 8, string = "", bool = false , bool =  false , double=16.0 );
 
     //metodi get
     bool getVolontariato() const;
