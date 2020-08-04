@@ -1,6 +1,6 @@
 #include "../header/turno_regolare.h"
 //costruttore
-Turno_regolare::Turno_regolare(Data& d, u_int o, string r): Turno(d,o), reparto(r) {};
+Turno_regolare::Turno_regolare(giorni d, u_int o, string r): Turno(d,o), reparto(r) {};
 
 //metodi get
 string Turno_regolare::getReparto() const{ return reparto;}
