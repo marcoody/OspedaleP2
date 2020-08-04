@@ -11,7 +11,7 @@ private:
     static const int r = 255, g = 102, b = 0;
 
 public:
-    Turno_parziale(Data&, u_int, string, bool=true, double= 14.0);
+    Turno_parziale(giorni, u_int = 4, string = "", bool=true, double= 14.0);
 
     //metodi get
     bool getDaContratto() const;
