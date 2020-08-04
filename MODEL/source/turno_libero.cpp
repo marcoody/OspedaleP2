@@ -1,7 +1,7 @@
 #include "../header/turno_libero.h"
 
 //costruttore
-Turno_libero::Turno_libero(Data& d, u_int no, bool p):Turno(d,no), permesso(p){};
+Turno_libero::Turno_libero(giorni d, bool p):Turno(d,24), permesso(p){};
 
 //metodi get
 bool Turno_libero::getPermesso() const { return permesso; }
@@ -23,13 +23,13 @@ void Turno_libero::importXmlData(QXmlStreamReader& in, bool& permesso){
 }
 
 Turno* Turno_libero::importXml(QXmlStreamReader& in){
-    Data dataTurno;
+    giorni giornoTurno;
     u_int nOre;
     bool permesso;
     //legge dal file i tag e li memorizza in dataTurno e nOre
-    Turno::importXmlData(in, dataTurno, nOre);
+    Turno::importXmlData(in, giornoTurno, nOre);
     Turno_libero::importXmlData(in,permesso);
-    return new Turno_libero(dataTurno, nOre, permesso);
+    return new Turno_libero(giornoTurno, permesso);
 
 }
 
