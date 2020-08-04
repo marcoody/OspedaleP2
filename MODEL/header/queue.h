@@ -91,6 +91,7 @@ class Queue {
     template <bool C> iterator insert(const Base_Iterator<C>&, const T&);
     template <bool C> iterator erase(const Base_Iterator<C>&);
     iterator find(const T&) const;
+    iterator indexToIter(int);
     void clear();
     void clean();
     void push_back(const T&);
@@ -177,6 +178,8 @@ T& Queue<T>::operator[](int n) const {
   for(it = begin(); it != end() && n > 0; ++it, --n) {}
   return (it.iter)->info;
 }
+
+
 
 template <typename T>
 typename Queue<T>::iterator Queue<T>::begin() const {
@@ -270,6 +273,13 @@ typename Queue<T>::iterator Queue<T>::find(const T& key) const {
 }
 
 template <typename T>
+typename Queue<T>::iterator Queue<T>::indexToIter(int n){
+    iterator it;
+    for( it = begin(); it!=end() && n>0; ++it, --n){}
+    return it;
+}
+
+template <typename T>
 void Queue<T>::clear() {
   try {
     if(empty()) throw Queue_Exception("The queue cannot be deleted as it's empty", 3);
@@ -357,6 +367,8 @@ void Queue<T>::exportXmlData(QXmlStreamWriter& out){
     }
     out.writeEndElement();
 }
+
+
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Queue<T>& q) {
