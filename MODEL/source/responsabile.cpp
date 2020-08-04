@@ -2,6 +2,8 @@
 
 string Responsabile::getTag() const { return "RESPONSABILE"; }
 
+double Responsabile::stipendio() const{ return 0;}
+
 Responsabile::Responsabile(string user, string pw, string no, string co, const Data& d, const gender& g): Persona(user, pw, no, co, d, g){}
 
 //permessi
