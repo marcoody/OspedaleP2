@@ -26,8 +26,12 @@ public:
     bool search(const Persona*) const;
     static bool checkPassword(const Persona* p, string pw);
     void changePassword(Persona*, string);
+    void exportXml();
     bool importXml();
+
     void defaultData();
+    u_int nPersoneQueue() const;
+    void sortByName();
 };
 
 #endif // QUEUEPERSONE_H
