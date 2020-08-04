@@ -1,6 +1,6 @@
 #include "../header/turno_intero.h"
 //costruttore
-Turno_intero::Turno_intero(Data& d, u_int o, string r, double p): Turno(d,o), Turno_regolare(d,o,r), paga_intero(p){};
+Turno_intero::Turno_intero(giorni d, u_int o, string r, double p): Turno(d,o), Turno_regolare(d,o,r), paga_intero(p){};
 
 //metodi get
 double Turno_intero::getPagaIntero() const { return paga_intero; }
@@ -22,15 +22,15 @@ void Turno_intero::importXmlData(QXmlStreamReader& in, double& paga_intero){
 }
 
 Turno* Turno_intero::importXml(QXmlStreamReader& in){
-    Data dataTurno;
+    giorni giornoTurno;
     u_int nOre;
     string reparto;
     double paga_intero;
     //legge dal file i tag e li memorizza in dataTurno e nOre
-    Turno::importXmlData(in ,dataTurno, nOre);
+    Turno::importXmlData(in ,giornoTurno, nOre);
     Turno_regolare::importXmlData(in, reparto);
     Turno_intero::importXmlData(in, paga_intero);
-    return new Turno_intero(dataTurno, nOre, reparto, paga_intero);
+    return new Turno_intero(giornoTurno, nOre, reparto, paga_intero);
 
 }
 
