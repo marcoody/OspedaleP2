@@ -8,6 +8,7 @@ QString QueueTurni::getDefaultFile() const {return defaultFile; }
 
 
 bool QueueTurni::importXml(QXmlStreamReader& in){
+    clean();
     bool ok = false;
         while(in.readNextStartElement()) {
             if(in.name() == getStartTagXml()){
