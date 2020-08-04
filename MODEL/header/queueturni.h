@@ -16,7 +16,18 @@ private:
     QString getStartTagXml() const;
     QString getDefaultFile() const;
 public:
-    QueueTurni(): Queue(){};
+    QueueTurni(): Queue(){
+        giorni g = giorni::lunedi;
+        for(int i=0; i<6; ++i){
+            Turno_intero* tmp = new Turno_intero(g, 8, "");
+            push_back(tmp->clone());
+            delete tmp;
+            avanzaGiorni(g);
+        }
+        Turno_libero* tmp = new Turno_libero(giorni::domenica);
+        push_back(tmp->clone());
+        delete tmp;
+    };
 
 
     bool importXml(QXmlStreamReader&);
