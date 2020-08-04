@@ -19,7 +19,6 @@ private:
     Data dataNascita;
     gender genere;
 
-    virtual string getTag() const = 0;
 public:
 
     Persona(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro);
@@ -34,6 +33,7 @@ public:
     gender getGenere() const;
 
     //metodi per cambiare i campi privati (tutti tranne username)
+    void setUsername(string&);
     void setPassword(string&);
     void setNome(string&);
     void setCognome(string&);
@@ -48,6 +48,9 @@ public:
     //virtuali
     virtual ~Persona(){};
     virtual Persona* clone() const = 0;
+    virtual string getTag() const = 0;
+    virtual string infoPersona() const;
+    virtual double stipendio() const = 0;
 
     //Import export
     virtual void exportXml(QXmlStreamWriter&) const;
