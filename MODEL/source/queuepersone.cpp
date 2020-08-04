@@ -1,7 +1,7 @@
 #include "../header/queuepersone.h"
 
 QString QueuePersone::startTag = "PERSONE";
-QString QueuePersone::defaultFile = "personedata.xml";
+QString QueuePersone::defaultFile = "prova.xml";
 
 QString QueuePersone::getStartTagXml() const { return startTag; }
 QString QueuePersone::getDefaultFile() const { return defaultFile; }
@@ -31,6 +31,22 @@ bool QueuePersone::checkPassword(const Persona* p, string pw){
 
 void QueuePersone::changePassword(Persona* p, string nuova) {
     p->setPassword(nuova);
+}
+
+void QueuePersone::exportXml()
+{
+    QFile file(getDefaultFile());
+    file.open(QIODevice::WriteOnly);
+    QXmlStreamWriter xmlOutput(&file);
+    xmlOutput.setAutoFormatting(true);
+    xmlOutput.writeStartDocument();
+
+    xmlOutput.writeStartElement(getStartTagXml());
+    for(auto ci = begin(); ci != end(); ++ci)
+        (*ci)->exportXml(xmlOutput);
+    xmlOutput.writeEndElement();
+    xmlOutput.writeEndDocument();
+    file.close();
 }
 
 bool QueuePersone::importXml() {
@@ -79,8 +95,32 @@ bool QueuePersone::importXml() {
     file.close();
     return ok;
 }
+
 void QueuePersone::defaultData() {
     clean();
     Responsabile r("admin", "admin");
     push_back(r.clone());
+}
+
+unsigned short QueuePersone::nPersoneQueue() const{
+   u_int tot = 0;
+   for(QueuePersone::const_iterator it = begin(); it!=end(); ++it){
+       ++tot;
+   }
+   return tot;
+}
+
+void QueuePersone::sortByName(){
+    int i, j;
+    Persona* key =0;
+    for (i= 1; i != nPersoneQueue(); i++){
+        key = *indexToIter(i);
+        j = i-1;
+        while (j >= 0 && ((*indexToIter(j))->getCognome() > key->getCognome())){
+            *indexToIter(j + 1) = *indexToIter(j);
+            j = j - 1;
+        }
+
+        *indexToIter(j + 1) = key;
+    }
 }
