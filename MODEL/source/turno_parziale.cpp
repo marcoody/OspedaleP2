@@ -1,6 +1,6 @@
 #include "../header/turno_parziale.h"
 //costruttore
-Turno_parziale::Turno_parziale(Data& d, u_int o, string r, bool c, double p): Turno(d,o), Turno_regolare(d,o,r), daContratto(c), paga_parziale(p){};
+Turno_parziale::Turno_parziale(giorni d, u_int o, string r, bool c, double p): Turno(d,o), Turno_regolare(d,o,r), daContratto(c), paga_parziale(p){};
 
 //metodi get
 bool Turno_parziale::getDaContratto() const {return daContratto; }
@@ -28,16 +28,16 @@ void Turno_parziale::importXmlData(QXmlStreamReader& in, bool& c, double& paga_p
 }
 
 Turno* Turno_parziale::importXml(QXmlStreamReader& in){
-    Data dataTurno;
+    giorni giornoTurno;
     u_int nOre;
     string reparto;
     bool daContratto;
     double paga_parziale;
     //legge dal file i tag e li memorizza in dataTurno e nOre
-    Turno::importXmlData(in ,dataTurno, nOre);
+    Turno::importXmlData(in ,giornoTurno, nOre);
     Turno_regolare::importXmlData(in, reparto);
     Turno_parziale::importXmlData(in, daContratto, paga_parziale);
-    return new Turno_parziale(dataTurno, nOre, reparto, daContratto, paga_parziale);
+    return new Turno_parziale(giornoTurno, nOre, reparto, daContratto, paga_parziale);
 
 }
 
