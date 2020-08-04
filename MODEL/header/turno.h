@@ -10,18 +10,18 @@ using std::string;
 
 class Turno{
 private:
-    Data dataTurno;
+    giorni giornoTurno;
     u_int nOre;
 
 public:
-    Turno(Data& , u_int);
+    Turno(giorni , u_int);
 
     //metodi get
-    Data getDataTurno() const;
+    giorni getGiornoTurno() const;
     u_int getNOre() const;
 
     //metodi set
-    void setDataTurno(Data&);
+    void setGiornoTurno(giorni&);
     void setNOre(u_int);
 
     //metodi export
@@ -29,7 +29,7 @@ public:
     virtual void exportXmlData(QXmlStreamWriter&) const;
 
     //metodi import
-    static void importXmlData(QXmlStreamReader&, Data&, u_int&);
+    static void importXmlData(QXmlStreamReader&, giorni&, u_int&);
 
     //metodi virtuali
     virtual Turno* clone() const = 0;
