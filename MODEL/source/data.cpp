@@ -66,7 +66,7 @@ std::string Data::dataToString() const{
     return getGiornoString()+"/"+getMeseString()+"/"+getAnnoString();
 }
 
-Data& stringToData(std::string s){
+Data stringToData(std::string s){
     int g,m,a;
     const char* c= s.c_str();
     sscanf(c,"%2d/%2d/%4d", &g, &m, &a);
@@ -187,3 +187,39 @@ std::istream& operator >>(std::istream& is, Data& d){
     return is;
 }
 
+
+std::string giornoToString(giorni g){
+    std::string ris;
+    if(g==0){ ris="luendì"; }
+    else if(g==1){ ris="martedì"; }
+    else if(g==2){ ris="mercoledì"; }
+    else if(g==3){ ris="giovedì"; }
+    else if(g==4){ ris="venerdì"; }
+    else if(g==5){ ris="sabato"; }
+    else { ris="domenica"; }
+
+    return ris;
+}
+
+giorni stringToGiorni(std::string s){
+    giorni g;
+    if(s=="lunedì"){ g=giorni::lunedi; }
+    else if (s=="martedì"){ g=giorni::martedi; }
+    else if (s=="mercoledì"){ g=giorni::mercoledi; }
+    else if (s=="giovedì"){ g=giorni::giovedi; }
+    else if (s=="venerdì"){ g=giorni::venerdi; }
+    else if (s=="sabato"){ g=giorni::sabato; }
+    else { g=giorni::domenica; }
+
+    return g;
+}
+
+void avanzaGiorni(giorni & g){
+    if(g==0){ g=giorni::martedi; }
+    else if( g==1) { g=giorni::mercoledi; }
+    else if( g==2) { g=giorni::giovedi; }
+    else if( g==3) { g=giorni::venerdi; }
+    else if( g==4) { g=giorni::sabato; }
+    else if( g==5) { g=giorni::domenica; }
+    else { g=giorni::lunedi; }
+}
