@@ -1,7 +1,7 @@
 #include "../header/queuepersone.h"
 
 QString QueuePersone::startTag = "PERSONE";
-QString QueuePersone::defaultFile = "prova.xml";
+QString QueuePersone::defaultFile = "personedata.xml";
 
 QString QueuePersone::getStartTagXml() const { return startTag; }
 QString QueuePersone::getDefaultFile() const { return defaultFile; }
