@@ -12,7 +12,7 @@ private:
     bool chirurgo;
     QueueTurni turni;
 
-    virtual string getTag() const;
+
 public:
     Medico(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, string rep = "", bool chir = false, const  QueueTurni& = QueueTurni());
 
@@ -24,13 +24,18 @@ public:
     //set
     void setReparto(string&);
     void setChirurgo(bool);
+    void setTurno(giorni, Turno*);
 
     //permessi
     virtual bool isResponsabile() const;
     virtual bool canAddTurni() const;
     virtual bool canEditTurni() const;
+
     //virtual
     virtual Medico* clone() const;
+    virtual string infoPersona() const;
+    virtual string getTag() const;
+    virtual double stipendio() const;
 
     //Import export
     virtual void exportXml(QXmlStreamWriter&) const;
