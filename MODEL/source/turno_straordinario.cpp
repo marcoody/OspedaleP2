@@ -1,6 +1,6 @@
 #include "../header/turno_straordinario.h"
 //costruttore
-Turno_straordinario::Turno_straordinario(Data& d, u_int o, string r, bool p , bool v, double pa): Turno(d,o), Turno_regolare(d,o,r), Turno_libero(d,o,p), volontariato(v), paga_straordinario(pa){};
+Turno_straordinario::Turno_straordinario(giorni d, u_int o, string r, bool p , bool v, double pa): Turno(d,o), Turno_regolare(d,o,r), Turno_libero(d,p), volontariato(v), paga_straordinario(pa){};
 
 //metodi get
 bool Turno_straordinario::getVolontariato() const {return volontariato; }
@@ -33,18 +33,18 @@ void Turno_straordinario::importXmlData(QXmlStreamReader& in, bool& volontariato
     paga_straordinario = stod(pString);
 }
 Turno* Turno_straordinario::importXml(QXmlStreamReader& in){
-    Data dataTurno;
+    giorni giorniTurno;
     u_int nOre;
     string reparto;
     bool permesso;
     bool volontariato;
     double paga_straordinario;
     //legge dal file i tag e li memorizza in dataTurno e nOre
-    Turno::importXmlData(in, dataTurno, nOre);
+    Turno::importXmlData(in, giorniTurno, nOre);
     Turno_regolare::importXmlData(in, reparto);
     Turno_libero::importXmlData(in, permesso);
     Turno_straordinario::importXmlData(in, volontariato, paga_straordinario);
-    return new Turno_straordinario(dataTurno, nOre, reparto, permesso, volontariato, paga_straordinario);
+    return new Turno_straordinario(giorniTurno, nOre, reparto, permesso, volontariato, paga_straordinario);
 }
 
 //metodi virtual
