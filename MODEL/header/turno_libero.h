@@ -11,7 +11,7 @@ private:
     bool permesso;
     static const int r = 0, g = 153, b = 0;
 public:
-    Turno_libero(Data& , u_int, bool);
+    Turno_libero(giorni , bool = true);
 
     //metodi get
     bool getPermesso() const;
@@ -33,5 +33,7 @@ public:
     virtual const Colore getColor() const;
     virtual string getTag() const;
 };
+
+#endif // TURNO_LIBERO_H
 
 #endif // TURNO_LIBERO_H
