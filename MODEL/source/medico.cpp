@@ -2,6 +2,14 @@
 
 string Medico::getTag() const {return "MEDICO";}
 
+double Medico::stipendio() const{
+    double s = 0;
+    for(auto it = turni.begin(); it!=turni.end(); ++it){
+        s += (*it)->paga();
+    }
+    return s;
+}
+
 Medico::Medico(string user, string pw, string no, string co, const Data& d, const gender& g, string rep, bool chir,const QueueTurni& t): Persona(user, pw, no, co, d, g), reparto(rep), chirurgo(chir), turni(t) {}
 
 //get
@@ -14,6 +22,10 @@ QueueTurni Medico::getTurni() const{ return turni;}
 void Medico::setReparto(string& r) { reparto=r; }
 void Medico::setChirurgo(bool c) { chirurgo=c;}
 
+void Medico::setTurno(giorni g, Turno*change){
+    turni[g] = change;
+}
+
 
 //permessi
 bool Medico::isResponsabile() const { return false; }
@@ -21,6 +33,14 @@ bool Medico::canAddTurni() const {return false;}
 bool Medico::canEditTurni() const { return true; }
 
 Medico* Medico::clone() const { return new Medico(*this); }
+
+string Medico::infoPersona() const {
+    string s=Persona::infoPersona();
+    s+= "\nReparto: " + getReparto() + "\nChirurgo: ";
+    if(isChirurgo()){ s += "Sì";}
+    else { s += "No"; }
+    return s;
+}
 
 void Medico::exportXml(QXmlStreamWriter & out) const{
     Persona::exportXml(out);
@@ -33,7 +53,7 @@ void Medico::importXmlData(QXmlStreamReader& in, string& reparto, bool& chirurgo
     importTagXml(in, "reparto", reparto);
     string chirurgoString;
     importTagXml(in, "chirurgo", chirurgoString);
-    chirurgo = chirurgoString=="0"? 0:1;
+    chirurgo = chirurgoString=="0" ? 0:1;
     turni.importXml(in);
 }
 Persona* Medico::importXml(QXmlStreamReader& in){
