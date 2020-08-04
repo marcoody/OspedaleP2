@@ -1,38 +1,26 @@
-#ifndef QUEUETURNI_H
-#define QUEUETURNI_H
-#include "turno.h"
-#include "turno_regolare.h"
-#include "turno_intero.h"
-#include "turno_parziale.h"
-#include "turno_libero.h"
-#include "turno_straordinario.h"
-#include "queue.h"
+#ifndef RESPONSABILE_H
+#define RESPONSABILE_H
+#include <string>
+#include "persona.h"
+using std::string;
 
-
-class QueueTurni: public Queue<Turno*>{
-private:
-    static QString startTag;
-    static QString defaultFile;
-    QString getStartTagXml() const;
-    QString getDefaultFile() const;
+class Responsabile: public Persona{
 public:
-    QueueTurni(): Queue(){
-        giorni g = giorni::lunedi;
-        for(int i=0; i<6; ++i){
-            Turno_intero* tmp = new Turno_intero(g, 8, "");
-            push_back(tmp->clone());
-            delete tmp;
-            avanzaGiorni(g);
-        }
-        Turno_libero* tmp = new Turno_libero(giorni::domenica);
-        push_back(tmp->clone());
-        delete tmp;
-    };
+    Responsabile(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro);
 
+    //permessi
+    virtual bool isResponsabile() const;
+    virtual bool canAddTurni() const;
+    virtual bool canEditTurni() const;
+    virtual Responsabile* clone() const;
+    virtual string getTag() const;
+    virtual double stipendio() const;
+    //infoPersona ereditato da Persona
 
-    bool importXml(QXmlStreamReader&);
-    double stipendioTurni() const;
-
+    //import export
+    //export ereditato da Persona
+    static Persona* importXml(QXmlStreamReader&);
 };
 
-#endif // QUEUETURNI_H
+#endif // RESPONSABILE_H
+
