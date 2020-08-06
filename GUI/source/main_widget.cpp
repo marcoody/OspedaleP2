@@ -254,7 +254,7 @@ void Main_widget::calculateStipendio(){
     QMessageBox msg;
     msg.setWindowIcon(QIcon(QPixmap(":/info")));
     msg.setWindowTitle("Calcolo stipendio settimanale");
-    msg.setText("Lo stipendio settimanale dell'utente selezionato è: " + QString::number((utenti[elenco->currentRow()])->stipendio(),'f',2)+" Gbyte");
+    msg.setText("Lo stipendio settimanale dell'utente selezionato è: " + QString::number((utenti[elenco->currentRow()])->stipendio(),'f',2)+" Euro");
     msg.exec();
 }
 
