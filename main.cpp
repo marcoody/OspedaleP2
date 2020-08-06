@@ -1,5 +1,13 @@
+#include "MODEL/header/queueturni.h"
+#include "MODEL/header/queuepersone.h"
+#include "MODEL/header/persona.h"
+#include "MODEL/header/queue.h"
+#include "GUI/header/main_dialog.h"
 
+#include <iostream>
+#include <QApplication>
 #include <QMessageBox>
+
 
 
 int main(int argc, char **argv)
