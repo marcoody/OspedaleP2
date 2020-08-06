@@ -32,7 +32,18 @@ SOURCES += \
     MODEL/source/turno_straordinario.cpp \
     MODEL/source/queueturni.cpp \
     MODEL/source/queuepersone.cpp \
+    MODEL/source/userbuilder.cpp \
     GUI/source/login.cpp \
+    GUI/source/main_widget.cpp \
+    GUI/source/aepersona.cpp \
+    GUI/source/view_persona.cpp \
+    GUI/source/view_userbuilder.cpp \
+    GUI/source/view_medico.cpp \
+    GUI/source/view_infermiere.cpp \
+    GUI/source/view_responsabile.cpp \
+    GUI/source/main_dialog.cpp \
+    GUI/source/status_bar.cpp \
+
 
 HEADERS += \
     MODEL/header/data.h \
@@ -51,7 +62,18 @@ HEADERS += \
     MODEL/header/turno_parziale.h \
     MODEL/header/turno_straordinario.h \
     MODEL/header/queuepersone.h \
+    MODEL/header/userbuilder.h \
     GUI/header/login.h \
+    GUI/header/main_widget.h \
+    GUI/header/aepersona.h \
+    GUI/header/view_persona.h \
+    GUI/header/view_userbuilder.h \
+    GUI/header/view_medico.h \
+    GUI/header/view_infermiere.h \
+    GUI/header/view_responsabile.h \
+    GUI/header/main_dialog.h \
+    GUI/header/status_bar.h \
+
 
 FORMS +=
 
@@ -59,3 +81,6 @@ FORMS +=
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Resources.qrc
