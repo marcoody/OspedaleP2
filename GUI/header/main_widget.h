@@ -11,10 +11,13 @@
 #include <QRadioButton>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QSignalMapper>
 #include "../../MODEL/header/queuepersone.h"
 #include "../../MODEL/header/persona.h"
 #include "../../GUI/header/aepersona.h"
 #include "../../MODEL/header/userbuilder.h"
+#include "../../GUI/header/turniwidget.h"
+#include "../../GUI/header/eturno.h"
 
 class Main_widget: public QWidget {
     Q_OBJECT
@@ -25,9 +28,10 @@ private:
     QueuePersone& utenti;
     QGridLayout* grid;
     Persona* chiamante;
-    QPushButton* addButt, *editButt, *deleteButt, *turnoButt;
+    QPushButton* addButt, *editButt, *deleteButt;
     QPushButton* stipendioButt, *sortName;
     QListWidget*  elenco;
+    turniWidget* turniwidget;
     QLabel* info;
     QScrollArea* infoView;
 
@@ -52,17 +56,17 @@ signals:
 
 private slots:
     void showInfoPersona();
+    void refreshTurniWidget();
     void refreshDelete();
+    void refreshEdit();
     void refreshStipendio();
-    void refreshTurno(); //i responsabili non hanno turno, quindi se selez un responsabile, il suo bottone tueno non deve comparire
     void deleteSelected();
     void calculateStipendio();
-    //void editTurno();
     void editPersona();
     void addPersona();
     void filtra();
     void sortByName();
-
+    void editTurno(int);
 
 };
 #endif // MAIN_WIDGET_H
