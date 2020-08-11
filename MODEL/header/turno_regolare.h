@@ -10,7 +10,7 @@ private:
     string reparto;
 
 public:
-    Turno_regolare(giorni, u_int, string);
+    Turno_regolare(giorni, u_int, string = "");
 
     //metodi get
     string getReparto() const;
