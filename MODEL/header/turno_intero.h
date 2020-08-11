@@ -9,7 +9,7 @@ private:
     double paga_intero;
     static const int r = 51, g = 153, b = 255;
 public:
-    Turno_intero(giorni, u_int , string, double = 15.0);
+    Turno_intero(giorni, u_int , string = "", double = 15.0);
 
     //metodi get
     double getPagaIntero() const;
