@@ -43,6 +43,14 @@ SOURCES += \
     GUI/source/view_responsabile.cpp \
     GUI/source/main_dialog.cpp \
     GUI/source/status_bar.cpp \
+    GUI/source/turniwidget.cpp \
+    GUI/source/view_turno.cpp \
+    GUI/source/eturno.cpp \
+    GUI/source/view_turno_libero.cpp \
+    GUI/source/view_turno_regolare.cpp \
+    GUI/source/view_turno_intero.cpp \
+    GUI/source/view_turno_parziale.cpp \
+    GUI/source/view_turno_straordinario.cpp \
 
 
 HEADERS += \
@@ -73,6 +81,14 @@ HEADERS += \
     GUI/header/view_responsabile.h \
     GUI/header/main_dialog.h \
     GUI/header/status_bar.h \
+    GUI/header/turniwidget.h \
+    GUI/header/view_turno.h \
+    GUI/header/eturno.h \
+    GUI/header/view_turno_libero.h \
+    GUI/header/view_turno_regolare.h \
+    GUI/header/view_turno_intero.h \
+    GUI/header/view_turno_parziale.h \
+    GUI/header/view_turno_straordinario.h \
 
 
 FORMS +=
