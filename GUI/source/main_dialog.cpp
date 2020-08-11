@@ -25,7 +25,7 @@ void Main_dialog::setUser(){
 void Main_dialog::setMenuBar()
 {
     menubar = menuBar();
-    //parent senza valore di default su alcune versioni di QT (ad esempio in laboratorio)
+    //parent senza valore di default su alcune versioni di QT
     mbFile = new QMenu("File", nullptr);
     mbLogOut = new QAction("Cambia utente", nullptr);
     mbEsci = new QAction("Esci", nullptr);
@@ -34,11 +34,6 @@ void Main_dialog::setMenuBar()
     mbFile->addAction(mbEsci);
     menubar->addMenu(mbFile);
 
-    mbTools = new QMenu("Tools", nullptr);
-    menubar->addMenu(mbTools);
-
-    mbInfo  = new QMenu("Info", nullptr);
-    menubar->addMenu(mbInfo);
 
     connect(mbLogOut, SIGNAL(triggered(bool)), this, SLOT(reloginSlot()));
     connect(mbLogOut, SIGNAL(triggered(bool)), this, SLOT(close()));

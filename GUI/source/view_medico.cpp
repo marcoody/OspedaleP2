@@ -26,7 +26,7 @@ void view_medico::build_field(){
     chirurgia->addItem("No");
 
     reparto->setText(QString::fromStdString(m->getReparto()));
-    chirurgia->currentData(m->isChirurgo());
+    chirurgia->currentData(!m->isChirurgo());
 
     layout->addRow(new QLabel("Reparto: "), reparto);
     layout->addRow( new QLabel("Chirurgo: "), chirurgia);
