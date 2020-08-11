@@ -6,7 +6,7 @@ using std::string;
 
 class Responsabile: public Persona{
 public:
-    Responsabile(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro);
+    Responsabile(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, const QueueTurni& = QueueTurni());
 
     //permessi
     virtual bool isResponsabile() const;
@@ -14,7 +14,7 @@ public:
     virtual bool canEditTurni() const;
     virtual Responsabile* clone() const;
     virtual string getTag() const;
-    virtual double stipendio() const;
+    //stipendio ereditata
     //infoPersona ereditato da Persona
 
     //import export
