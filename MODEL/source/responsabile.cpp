@@ -2,9 +2,8 @@
 
 string Responsabile::getTag() const { return "RESPONSABILE"; }
 
-double Responsabile::stipendio() const{ return 0;}
 
-Responsabile::Responsabile(string user, string pw, string no, string co, const Data& d, const gender& g): Persona(user, pw, no, co, d, g){}
+Responsabile::Responsabile(string user, string pw, string no, string co, const Data& d, const gender& g, const QueueTurni& t): Persona(user, pw, no, co, d, g, t){}
 
 //permessi
 bool Responsabile::isResponsabile() const {return true;}
@@ -18,7 +17,8 @@ Persona* Responsabile::importXml(QXmlStreamReader&in){
     string username, password, nome, cognome;
     Data dataNascita;
     gender genere;
+    QueueTurni turni;
 
-    Persona::importXmlData(in, username, password, nome, cognome, dataNascita, genere);
-    return new Responsabile(username, password, nome, cognome, dataNascita, genere);
+    Persona::importXmlData(in, username, password, nome, cognome, dataNascita, genere, turni);
+    return new Responsabile(username, password, nome, cognome, dataNascita, genere, turni);
 }
