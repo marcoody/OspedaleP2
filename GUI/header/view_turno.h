@@ -41,3 +41,5 @@ signals:
 
 };
 #endif // VIEW_TURNO_H
+
+
