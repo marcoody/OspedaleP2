@@ -25,8 +25,6 @@ private:
     Main_widget* mainWidget;
     QMenuBar* menubar;
     QMenu* mbFile;
-    QMenu* mbTools;
-    QMenu* mbInfo;
     QAction* mbLogOut;
     QAction* mbEsci;
 
