@@ -6,17 +6,11 @@
 using std::string;
 
 class Infermiere: public Persona{
-private:
-    QueueTurni turni;
 
 public:
     Infermiere(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, const QueueTurni& = QueueTurni());
 
-    //metodi get
-    QueueTurni getTurni() const;
 
-    //metodi set
-    void setTurni(giorni, Turno*);
     //permessi
     virtual bool isResponsabile() const;
     virtual bool canAddTurni() const;
@@ -25,11 +19,10 @@ public:
     //virtual
     virtual Infermiere* clone() const;
     virtual string getTag() const;
-    virtual double stipendio() const;
+    //stpendio ereditata
     //infoPersona ereditato da Persona
+    //impoertXmlData e exportXml ereditati da Persona
 
-    virtual void exportXml(QXmlStreamWriter &) const;
-    static void importXmlData(QXmlStreamReader&, QueueTurni&);
     static Persona* importXml(QXmlStreamReader&);
 };
 
