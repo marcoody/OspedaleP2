@@ -10,21 +10,18 @@ class Medico: public Persona{
 private:
     string reparto;
     bool chirurgo;
-    QueueTurni turni;
 
 
 public:
-    Medico(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, string rep = "", bool chir = false, const  QueueTurni& = QueueTurni());
+    Medico(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, const QueueTurni& = QueueTurni(), string rep = "", bool chir = false);
 
     //get
     string getReparto() const;
     bool isChirurgo() const;
-    QueueTurni getTurni() const;
 
     //set
     void setReparto(string&);
     void setChirurgo(bool);
-    void setTurno(giorni, Turno*);
 
     //permessi
     virtual bool isResponsabile() const;
@@ -35,11 +32,11 @@ public:
     virtual Medico* clone() const;
     virtual string infoPersona() const;
     virtual string getTag() const;
-    virtual double stipendio() const;
+    //stipendio ereditata
 
     //Import export
     virtual void exportXml(QXmlStreamWriter&) const;
-    static void importXmlData(QXmlStreamReader&, string&, bool&, QueueTurni&);
+    static void importXmlData(QXmlStreamReader&, string&, bool&);
     static Persona* importXml(QXmlStreamReader&);
 };
 
