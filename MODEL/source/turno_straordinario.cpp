@@ -1,4 +1,5 @@
 #include "../header/turno_straordinario.h"
+
 //costruttore
 Turno_straordinario::Turno_straordinario(giorni d, u_int o, string r, bool p , bool v, double pa): Turno(d,o), Turno_regolare(d,o,r), Turno_libero(d,p), volontariato(v), paga_straordinario(pa){};
 
