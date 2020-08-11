@@ -8,6 +8,11 @@ private:
 
 public:
     Colore(unsigned short int, unsigned short int, unsigned short int);
+
+    unsigned short int getR() const;
+    unsigned short int getG() const;
+    unsigned short int getB() const;
+
 };
 
 #endif // COLORE_H
