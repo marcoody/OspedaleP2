@@ -4,6 +4,8 @@ view_turno_straordinario::~view_turno_straordinario(){}
 
 
 void view_turno_straordinario::edit() const{
+    view_turno_regolare::edit();
+    edit_only_libero();
     Turno_straordinario* ts = dynamic_cast<Turno_straordinario*>(t);
 
     std::string p = paga_straordinario->text().toStdString();
@@ -19,19 +21,17 @@ void view_turno_straordinario::edit() const{
 
 void view_turno_straordinario::build_field(){
     view_turno_regolare::build_field();
-    view_turno_libero::build_field();
+    build_field_only_libero();
     nOre->setDisabled(false);
-
-    Turno_straordinario* ts = dynamic_cast<Turno_straordinario*>(t);
-
+    nOre->setRange(1,24);
+    nOre->setValue(t->getNOre());
+    Turno_straordinario* ts = dynamic_cast<Turno_straordinario*>(t); 
     paga_straordinario = new QLineEdit();
     paga_straordinario->setText(QString::fromStdString(std::to_string(ts->getPagaStraordinario())));
-
     volontariato = new QComboBox();
     volontariato->addItem("Sì");
     volontariato->addItem("No");
     volontariato->currentData(ts->getVolontariato());
-
     layout->addRow(new QLabel("volontariato: "), volontariato);
     layout->addRow(new QLabel("Retribuzione oraria: "), paga_straordinario);
 

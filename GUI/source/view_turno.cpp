@@ -13,7 +13,7 @@ void view_turno::build_field(){
     layout = new QFormLayout(this);
     nOre = new QSpinBox();
 
-    nOre->setRange(1,12);
+    nOre->setRange(0,12);
     nOre->setValue(t->getNOre());
 
     layout->addRow(new QLabel("*Numero di ore:"), nOre);
@@ -40,19 +40,16 @@ bool view_turno::check() const {
 }
 
 void view_turno::edit() const {
-    int o = nOre->value();
-    t->setNOre(o);
+    t->setNOre(nOre->value());
 }
 
 void view_turno::checkAndEdit(){
-    if(check())
-    {
+    if(check()){
         edit();
 
         emit accept();
     }
-    else
-    {
+    else {
         QMessageBox msgErr;
         msgErr.setWindowTitle("Errore!");
         msgErr.setWindowIcon(QIcon(QPixmap(":/error")));

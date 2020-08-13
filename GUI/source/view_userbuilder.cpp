@@ -14,14 +14,23 @@ view_persona* view_UserBuilder::build(QueuePersone& lista, Persona* p){
 
 view_turno* view_UserBuilder::buildT(Turno* t){
 
-    if(dynamic_cast<Turno_libero*>(t))
-        return new view_turno_libero(t);
-    if(dynamic_cast<Turno_parziale*>(t))
+
+    if(dynamic_cast<Turno_parziale*>(t)){
         return new view_turno_parziale(t);
-    if(dynamic_cast<Turno_intero*>(t))
+    }
+
+    if(dynamic_cast<Turno_intero*>(t)){
         return new view_turno_intero(t);
-    if(dynamic_cast<Turno_straordinario*>(t))
+    }
+
+    if(dynamic_cast<Turno_straordinario*>(t)){
         return new view_turno_straordinario(t);
+    }
+
+
+    if(dynamic_cast<Turno_libero*>(t)){
+        return new view_turno_libero(t);
+    }
 
     return nullptr;
 }

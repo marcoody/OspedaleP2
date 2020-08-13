@@ -3,6 +3,8 @@
 view_turno_parziale::~view_turno_parziale(){}
 
 void view_turno_parziale::edit() const{
+    view_turno::edit();
+    view_turno_regolare::edit();
     Turno_parziale* tp = dynamic_cast<Turno_parziale*>(t);
 
     std::string p = paga_parziale->text().toStdString();

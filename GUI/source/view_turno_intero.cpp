@@ -3,6 +3,8 @@
 view_turno_intero::~view_turno_intero(){}
 
 void view_turno_intero::edit() const{
+    view_turno::edit();
+    view_turno_regolare::edit();
     Turno_intero* ti = dynamic_cast<Turno_intero*>(t);
 
     std::string p = paga_intero->text().toStdString();

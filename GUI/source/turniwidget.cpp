@@ -38,7 +38,7 @@ turniWidget::turniWidget(QWidget* parent): QWidget(parent){
 }
 
 void turniWidget::refreshButtons(Persona* p){
-    lunButt->setText(QString::fromStdString("LUN" + std::to_string(p->getTurni()[0]->getNOre()) + " ore"));
+    lunButt->setText(QString::fromStdString("LUN "+ std::to_string(p->getTurni()[0]->getNOre()) + " ore"));
     marButt->setText(QString::fromStdString("MAR "+ std::to_string(p->getTurni()[1]->getNOre()) + " ore"));
     merButt->setText(QString::fromStdString("MER "+ std::to_string(p->getTurni()[2]->getNOre()) + " ore"));
     gioButt->setText(QString::fromStdString("GIO "+ std::to_string(p->getTurni()[3]->getNOre()) + " ore"));

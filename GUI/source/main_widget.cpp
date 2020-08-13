@@ -4,79 +4,68 @@ Main_widget::Main_widget(QueuePersone& _utenti, Persona* utenteAttuale, QWidget*
     grid= new QGridLayout();
     setLayout(grid);
 
-    if(chiamante->isResponsabile()){
-        addButt = new QPushButton("Aggiungi un utente");
-        grid->addWidget(addButt,4,0);
+    //bottoni
+    addButt = new QPushButton("Aggiungi un utente");
+    grid->addWidget(addButt,4,0);
+    addButt->setDisabled(true);
 
-        editButt = new QPushButton("Modifica utente");
-        grid->addWidget(editButt,5,0);
-        editButt->setDisabled(true);
+    editButt = new QPushButton("Modifica utente");
+    grid->addWidget(editButt,5,0);
+    editButt->setDisabled(true);
 
-        deleteButt = new QPushButton("Elimina utente");
-        grid->addWidget(deleteButt,6,0);
-        deleteButt->setDisabled(true);
+    deleteButt = new QPushButton("Elimina utente");
+    grid->addWidget(deleteButt,6,0);
+    deleteButt->setDisabled(true);
 
-        connect(deleteButt, SIGNAL(clicked()), this, SLOT(deleteSelected()));
-        connect(addButt, SIGNAL(clicked()), this, SLOT(addPersona()));
-        connect(editButt, SIGNAL(clicked()), this, SLOT(editPersona()));
-    }
+    sortName = new QPushButton("Riordina per cognome");
+    grid->addWidget(sortName, 1,0);
+
+    stipendioButt = new QPushButton("Calcola stipendio");
+    stipendioButt->setDisabled(true);
+    grid->addWidget(stipendioButt,2,0);
 
     //lista utenti e info
     elenco = new QListWidget();
     grid->addWidget(elenco,0,0);
-
     infoView = new QScrollArea;
     info = new QLabel();
     infoView->setWidget(info);
     info->setText("Nessun utente selezionato.");
     info->setFixedWidth(400);
     info->setWordWrap(true);
-
     infoView->setFixedWidth(400);
     grid->addWidget(infoView,0,1,1,2);
 
 
-    //bottoni
-    sortName = new QPushButton("Riordina per cognome");
-    grid->addWidget(sortName, 1,0);
-    stipendioButt = new QPushButton("Calcola stipendio");
-    stipendioButt->setDisabled(true);
-    grid->addWidget(stipendioButt,2,0);
-
-    //widet Turno
+    //widget Turno
     turniwidget = new turniWidget();
     turniwidget->disableButt();
     grid->addWidget(turniwidget,2,1,1,1);
 
 
+    connect(deleteButt, SIGNAL(clicked()), this, SLOT(deleteSelected()));
+    connect(addButt, SIGNAL(clicked()), this, SLOT(addPersona()));
+    connect(editButt, SIGNAL(clicked()), this, SLOT(editPersona()));
+
     connect(elenco, SIGNAL(itemSelectionChanged()), this, SLOT(showInfoPersona()));
     connect(elenco, SIGNAL(itemSelectionChanged()), this, SLOT(refreshStipendio()));
     connect(elenco, SIGNAL(itemSelectionChanged()), this, SLOT(refreshDelete()));
     connect(elenco, SIGNAL(itemSelectionChanged()), this, SLOT(refreshEdit()));
+    connect(elenco, SIGNAL(itemSelectionChanged()), this, SLOT(refreshAdd()));
     connect(elenco, SIGNAL(itemSelectionChanged()), this, SLOT(refreshTurniWidget()));
     connect(stipendioButt, SIGNAL(clicked()), this, SLOT(calculateStipendio()));
     connect(sortName, SIGNAL(clicked()), this, SLOT(sortByName()));
 
-    QSignalMapper* signalMapper = new QSignalMapper(this);
+    if(chiamante->isResponsabile()){
 
-    connect(turniwidget->lunButt, SIGNAL(clicked()), this, SLOT(map()));
-    connect(turniwidget->marButt, SIGNAL(clicked()), this, SLOT(map()));
-    connect(turniwidget->merButt, SIGNAL(clicked()), this, SLOT(map()));
-    connect(turniwidget->gioButt, SIGNAL(clicked()), this, SLOT(map()));
-    connect(turniwidget->venButt, SIGNAL(clicked()), this, SLOT(map()));
-    connect(turniwidget->sabButt, SIGNAL(clicked()), this, SLOT(map()));
-    connect(turniwidget->domButt, SIGNAL(clicked()), this, SLOT(map()));
-
-    signalMapper->setMapping(turniwidget->lunButt, 0);
-    signalMapper->setMapping(turniwidget->marButt, 1);
-    signalMapper->setMapping(turniwidget->merButt, 2);
-    signalMapper->setMapping(turniwidget->gioButt, 3);
-    signalMapper->setMapping(turniwidget->venButt, 4);
-    signalMapper->setMapping(turniwidget->sabButt, 5);
-    signalMapper->setMapping(turniwidget->domButt, 6);
-
-    connect (signalMapper, SIGNAL(mapped(int)), this, SLOT(editTurno(int))) ;
-
+        connect(turniwidget->lunButt, SIGNAL(clicked()), this, SLOT(lunclicked()));
+        connect(turniwidget->marButt, SIGNAL(clicked()), this, SLOT(marclicked()));
+        connect(turniwidget->merButt, SIGNAL(clicked()), this, SLOT(merclicked()));
+        connect(turniwidget->gioButt, SIGNAL(clicked()), this, SLOT(gioclicked()));
+        connect(turniwidget->venButt, SIGNAL(clicked()), this, SLOT(venclicked()));
+        connect(turniwidget->sabButt, SIGNAL(clicked()), this, SLOT(sabclicked()));
+        connect(turniwidget->domButt, SIGNAL(clicked()), this, SLOT(domclicked()));
+    }
 
     createSearch();
 
@@ -151,7 +140,7 @@ void Main_widget::showInfoPersona(){
 }
 
 void Main_widget::refreshDelete(){
-    if( chiamante->getUsername()== utenti[elenco->currentRow()]->getUsername()){
+    if( (!chiamante->isResponsabile()) || (chiamante->getUsername()== utenti[elenco->currentRow()]->getUsername())){
         deleteButt->setDisabled(true);
     }
     else { deleteButt->setDisabled(false); }
@@ -162,6 +151,13 @@ void Main_widget::refreshEdit(){
         editButt->setDisabled(false);
     }
     else { editButt->setDisabled(true); }
+}
+
+void Main_widget::refreshAdd(){
+    if(chiamante->isResponsabile()){
+        addButt->setDisabled(false);
+    }
+    else { addButt->setDisabled(true); }
 }
 
 
@@ -197,13 +193,12 @@ void Main_widget::editPersona(){
 void Main_widget::editTurno(int t){
     int posTemp = elenco->currentRow();
     QStringList listaTurni;
-    Turno* turno = utenti[elenco->currentRow()]->getTurni()[t];
 
-    if (dynamic_cast<Turno_straordinario*>(turno)){
+    if (dynamic_cast<Turno_straordinario*>(utenti[posTemp]->getTurni()[t])){
         listaTurni << "Intero";
         listaTurni << "Parziale";
         listaTurni << "Libero";
-        listaTurni << "Straordianrio";
+        listaTurni << "Straordinario";
     }
     else {
 
@@ -217,11 +212,12 @@ void Main_widget::editTurno(int t){
     bool accettato = false;
     QString tipoTurno = inputDialog->getItem(this, QString("Selezione tipo di turno"), QString("Tipo di turno che si vuole creare:"), listaTurni, 0, true, &accettato);
     if(accettato){
-        Turno* turnoOggetto = UserBuilder::buildT(tipoTurno, turno);
-        ETurno* et = new ETurno(turnoOggetto);
+        Turno* tmp = UserBuilder::buildT(tipoTurno, utenti[posTemp]->getTurni()[t]);
+        ETurno* et = new ETurno(tmp);
         int ris = et->exec();
 
         if(ris == QDialog::Accepted){
+            utenti[posTemp]->setTurni(intToGiorni(t),tmp);
             utenti.exportXml();
             refreshTurniWidget();
             emit changeStatus("Modifiche apportate con successo");
@@ -231,15 +227,10 @@ void Main_widget::editTurno(int t){
             emit changeStatus("Modifiche ignorate");
             elenco->setCurrentRow(posTemp);
         }
-
-
-
     }
 
     else {emit changeStatus("Modifica ignorata");}
 }
-
-
 
 
 
@@ -309,6 +300,7 @@ void Main_widget::deleteSelected()
     }
 }
 
+
 void Main_widget::calculateStipendio(){
     QMessageBox msg;
     msg.setWindowIcon(QIcon(QPixmap(":/info")));
@@ -375,5 +367,19 @@ void Main_widget::sortByName(){
     clearSelection();
 }
 
+
+void Main_widget::lunclicked(){ emit editTurno(0); }
+
+void Main_widget::marclicked(){ emit editTurno(1); }
+
+void Main_widget::merclicked(){ emit editTurno(2); }
+
+void Main_widget::gioclicked(){ emit editTurno(3); }
+
+void Main_widget::venclicked(){ emit editTurno(4); }
+
+void Main_widget::sabclicked(){ emit editTurno(5); }
+
+void Main_widget::domclicked(){ emit editTurno(6); }
 
 

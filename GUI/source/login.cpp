@@ -1,76 +1,74 @@
 #include "../header/login.h"
 
-void Login::setLayoutLogin(){
-    layoutLogin = new QVBoxLayout();
-    userLabel = new QLabel();
-    pwLabel = new QLabel();
-    iconLogin = new QLabel();
-    userText = new QLineEdit();
-    pwText = new QLineEdit();
-
-    //set label
-    userLabel->setText("Username:");
-    pwLabel->setText("Password:");
-
-    //set icona
-    QPixmap icon;
-    icon.load(":/IMAGES/icona.png");
-    iconLogin->setPixmap(icon.scaled(80,80));
-
-    //setPassword
-    pwText->setEchoMode(QLineEdit::Password);
-
-    //assemblaggio
-    layoutLogin->addWidget(iconLogin);
-    layoutLogin->addWidget(userLabel);
-    layoutLogin->addWidget(userText);
-    layoutLogin->addWidget(pwLabel);
-    layoutLogin->addWidget(pwText);
-
-    setLoginButton();
-    setFixedSize(280, 200);
-}
-
-void Login::setLoginButton() {
-    submitLogin = new QPushButton();
-    submitLogin->setText("Login");
-    layoutLogin->addWidget(submitLogin);
-    connect(submitLogin, SIGNAL(clicked()), this, SLOT(provaAccesso()));
-}
-
-Login::Login(QueuePersone& _utenti, Persona** _loginUser, QWidget* parent ): QDialog(parent), utenti(_utenti), loginUser(_loginUser){
+Login::Login(QueuePersone& lista_user, Persona**loginUserRef, QWidget* parent):
+    QDialog(parent), listaUtenti(lista_user), loginUtenti(loginUserRef)
+{
     setWindowTitle("Gestionale Ospedale - Login");
-    setWindowIcon(QIcon(QPixmap(":/IMAGES/icona")));
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowIcon(QIcon(QPixmap(":/IMG/ospedale")));
 
-    setLayoutLogin();
+    createLayoutLogin();
     QVBoxLayout* mainLayout = new QVBoxLayout;
     mainLayout->addLayout(layoutLogin);
     setLayout(mainLayout);
 }
 
-void Login::reset() {
-    userText->clear();
-    pwText->clear();
-    userText->setFocus();
+void Login::clean()
+{
+    tname->clear();
+    tpass->clear();
+    tname->setFocus();
 }
 
-void Login::provaAccesso(){
-    if(utenti.checkPassword(utenti.search(userText->text().toStdString()), (pwText->text().toStdString()))){
-        //send(utenti.search(userText->text().toStdString()))
-        *loginUser = utenti.search(userText->text().toStdString());
+void Login::tryLogin()
+{
+    if(listaUtenti.checkPassword(listaUtenti.search((tname->text()).toStdString()), (tpass->text()).toStdString()))
+    {
+        //send((listaUtenti.search((tname->text()).toStdString()))); //fare controllo
+        *loginUtenti = listaUtenti.search((tname->text()).toStdString());
         this->close();
     }
-    else {
-        QMessageBox error;
-        if(utenti.search(userText->text().toStdString())){
-            error.setText("Password errata");
-            error.setWindowIcon(QIcon(QPixmap(":/IMAGES/error")));
+    else
+    {
+        QMessageBox msgError;
+        if(listaUtenti.search((tname->text()).toStdString()))
+        {
+            msgError.setText("Password errata");
+            msgError.setWindowIcon(QIcon(QPixmap(":/IMG/error")));
         }
         else
         {
-            error.setText("Utente non trovato");
-            error.setWindowIcon(QIcon(QPixmap(":/IMAGES/warning")));
+            msgError.setText("Utente non trovato");
+            msgError.setWindowIcon(QIcon(QPixmap(":/IMG/warning")));
         }
-        error.exec();
+        msgError.exec();
     }
+}
+
+void Login::createLayoutLogin()
+{
+    layoutLogin = new QGridLayout();
+    lname = new QLabel();
+    lname->setText("Nome:");
+    lpass = new QLabel();
+    lpass->setText("Password:");
+    lImgLogin = new QLabel;
+    QPixmap img;
+    img.load(":/IMG/login.png");
+    lImgLogin->setPixmap(img.scaled(100,100));
+    tname = new QLineEdit();
+    tpass = new QLineEdit();
+    tpass->setEchoMode(QLineEdit::Password);
+    layoutLogin->addWidget(lImgLogin, 0, 0, 4, 1); //si "mangia" 4 righe
+    layoutLogin->addWidget(lname, 1, 2);
+    layoutLogin->addWidget(tname, 1, 3);
+    layoutLogin->addWidget(lpass, 2, 2);
+    layoutLogin->addWidget(tpass, 2, 3);
+
+    blogin = new QPushButton();
+    blogin->setText("Login");
+    layoutLogin->addWidget(blogin, 3, 2, 1, 2);
+    connect(blogin, SIGNAL(clicked()), this, SLOT(tryLogin()));
+
+    setFixedSize(280,110);
 }
