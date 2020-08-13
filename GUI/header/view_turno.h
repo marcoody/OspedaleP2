@@ -6,6 +6,7 @@
 #include <QSpinBox>
 #include <QMessageBox>
 #include <QLabel>
+
 #include "../../MODEL/header/turno.h"
 
 class view_turno: public QWidget{
@@ -41,5 +42,3 @@ signals:
 
 };
 #endif // VIEW_TURNO_H
-
-

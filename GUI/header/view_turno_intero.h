@@ -1,12 +1,13 @@
 #ifndef VIEW_TURNO_INTERO_H
 #define VIEW_TURNO_INTERO_H
-#include <QLineEdit>
+#include <QSpinBox>
 #include <QWidget>
 
 #include "../../MODEL/header/turno.h"
 #include "../../MODEL/header/turno_intero.h"
 
 #include "view_turno_regolare.h"
+#include "view_turno.h"
 
 class view_turno_intero : public view_turno_regolare{
 public:

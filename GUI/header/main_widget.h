@@ -18,6 +18,7 @@
 #include "../../MODEL/header/userbuilder.h"
 #include "../../GUI/header/turniwidget.h"
 #include "../../GUI/header/eturno.h"
+#include <iostream>
 
 class Main_widget: public QWidget {
     Q_OBJECT
@@ -59,6 +60,7 @@ private slots:
     void refreshTurniWidget();
     void refreshDelete();
     void refreshEdit();
+    void refreshAdd();
     void refreshStipendio();
     void deleteSelected();
     void calculateStipendio();
@@ -67,6 +69,14 @@ private slots:
     void filtra();
     void sortByName();
     void editTurno(int);
+    void lunclicked();
+    void marclicked();
+    void merclicked();
+    void gioclicked();
+    void venclicked();
+    void sabclicked();
+    void domclicked();
+
 
 };
 #endif // MAIN_WIDGET_H

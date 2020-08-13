@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QComboBox>
 
+
 #include "../../MODEL/header/turno.h"
 #include "../../MODEL/header/turno_libero.h"
 
@@ -15,6 +16,8 @@ public:
 protected:
     virtual void edit() const;
     virtual void build_field();
+    void edit_only_libero() const;
+    void build_field_only_libero();
 private:
     QComboBox* permesso;
 };

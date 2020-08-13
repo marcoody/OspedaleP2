@@ -7,6 +7,7 @@
 #include "../../MODEL/header/turno_parziale.h"
 
 #include "view_turno_regolare.h"
+#include "view_turno.h"
 
 class view_turno_parziale :public view_turno_regolare{
 public:

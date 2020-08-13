@@ -2,6 +2,7 @@
 #define VIEW_USERBUILDER_H
 #include <string>
 #include <QString>
+#include <iostream>
 #include "../../MODEL/header/persona.h"
 #include "../../MODEL/header/medico.h"
 #include "../../MODEL/header/infermiere.h"
