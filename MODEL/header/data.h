@@ -13,6 +13,9 @@ using std::ostream;
 enum giorni {lunedi=0, martedi=1, mercoledi=2, giovedi=3, venerdi=4, sabato=5, domenica=6};
 std::string giornoToString(giorni);
 giorni stringToGiorni(std::string);
+int giornoToInt (giorni);
+giorni intToGiorni( int);
+
 void avanzaGiorni(giorni&);
 
 class Data {

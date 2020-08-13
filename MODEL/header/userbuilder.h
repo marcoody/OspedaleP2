@@ -6,6 +6,7 @@
 #include <QString>
 #include <QXmlStreamReader>
 
+
 #include "../../MODEL/header/medico.h"
 #include "../../MODEL/header/infermiere.h"
 #include "../../MODEL/header/responsabile.h"
