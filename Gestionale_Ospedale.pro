@@ -52,7 +52,6 @@ SOURCES += \
     GUI/source/view_turno_parziale.cpp \
     GUI/source/view_turno_straordinario.cpp \
 
-
 HEADERS += \
     MODEL/header/data.h \
     MODEL/header/persona.h \
