@@ -27,4 +27,3 @@ string Turno_regolare::infoTurno() const{
 }
 
 string Turno_regolare::getTag() const{ return "REGOLARE"; }
-

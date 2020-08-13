@@ -1,7 +1,7 @@
 #include "../header/queuepersone.h"
 
 QString QueuePersone::startTag = "PERSONE";
-QString QueuePersone::defaultFile = "prova.xml";
+QString QueuePersone::defaultFile = "personedata.xml";
 
 QString QueuePersone::getStartTagXml() const { return startTag; }
 QString QueuePersone::getDefaultFile() const { return defaultFile; }
@@ -80,7 +80,7 @@ bool QueuePersone::importXml() {
                             ok = true;
                         }
                         //porta il puntatore all'elemento successivo
-                        xmlInput.skipCurrentElement();
+                        //xmlInput.skipCurrentElement();
                     }
                     catch(errore_tag e)
                     {
@@ -98,7 +98,7 @@ bool QueuePersone::importXml() {
 
 void QueuePersone::defaultData() {
     clean();
-    Responsabile r("admin", "admin");
+    Responsabile r("admin", "admin", "admin", "admin");
     push_back(r.clone());
 }
 

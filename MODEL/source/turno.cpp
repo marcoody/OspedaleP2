@@ -39,13 +39,3 @@ string Turno::infoTurno() const{
 
 string Turno::getTag() const { return "TURNO"; }
 
-
-
-
-
-string Turno::infoTurno() const{
-    return "Tipo Turno: " + getTag() + "\nData: " + (getDataTurno().dataToString()) + "\nNumero di Ore: " + std::to_string(getNOre());
-}
-
-string Turno::getTag() const { return "TURNO"; }
-

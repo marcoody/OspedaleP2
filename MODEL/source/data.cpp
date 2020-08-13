@@ -223,3 +223,23 @@ void avanzaGiorni(giorni & g){
     else if( g==5) { g=giorni::domenica; }
     else { g=giorni::lunedi; }
 }
+
+int giornoToInt(giorni g){
+    if(g == lunedi){ return 0;}
+    else if (g == martedi) { return 1; }
+    else if (g == mercoledi) { return 2; }
+    else if (g == giovedi) { return 3; }
+    else if (g == venerdi) { return 4; }
+    else if (g == sabato) { return 5; }
+    else { return 6; }
+}
+
+giorni intToGiorni(int g){
+    if(g == 0){ return lunedi;}
+    else if (g == 1) { return martedi; }
+    else if (g == 2) { return mercoledi; }
+    else if (g == 3) { return giovedi; }
+    else if (g == 4) { return venerdi; }
+    else if (g == 5) { return sabato; }
+    else { return domenica; }
+}

@@ -17,15 +17,15 @@ Turno *UserBuilder::buildT(const QString & tipoTurno, Turno *prec){
     Turno_libero* tl = dynamic_cast<Turno_libero*>(prec);
     Turno_straordinario* ts = dynamic_cast<Turno_straordinario*>(prec);
 
-    if(tl && (tipoTurno!="Libero"))
-        return new Turno_straordinario(tl->getGiornoTurno());
+    if(tl && (tipoTurno=="Parziale" || tipoTurno=="Intero"))
+        return new Turno_straordinario(prec->getGiornoTurno());
 
     if(ts && tipoTurno == "Straordinario")
         return new Turno_straordinario(ts->getGiornoTurno(), ts->getNOre(), ts->getReparto(), ts->getPermesso(), ts->getVolontariato(), ts->getPagaStraordinario());
 
 
     if(tl && tipoTurno == "Libero")
-        return new Turno_libero(tl->getGiornoTurno(), tl->getPermesso());
+       return new Turno_libero(tl->getGiornoTurno(), tl->getPermesso());
 
 
     if(ti && tipoTurno =="Intero")
