@@ -59,15 +59,15 @@ void Login::createLayoutLogin()
     tname = new QLineEdit();
     tpass = new QLineEdit();
     tpass->setEchoMode(QLineEdit::Password);
-    layoutLogin->addWidget(lImgLogin, 0, 2, 4, 1); //si "mangia" 4 righe
-    layoutLogin->addWidget(lname, 1, 0);
-    layoutLogin->addWidget(tname, 1, 1);
-    layoutLogin->addWidget(lpass, 2, 0);
-    layoutLogin->addWidget(tpass, 2, 1);
+    layoutLogin->addWidget(lImgLogin, 0, 0, 4, 1); //si "mangia" 4 righe
+    layoutLogin->addWidget(lname, 1, 2);
+    layoutLogin->addWidget(tname, 1, 3);
+    layoutLogin->addWidget(lpass, 2, 2);
+    layoutLogin->addWidget(tpass, 2, 3);
 
     blogin = new QPushButton();
     blogin->setText("Login");
-    layoutLogin->addWidget(blogin, 3, 0, 1, 2);
+    layoutLogin->addWidget(blogin, 3, 2, 1, 2);
     connect(blogin, SIGNAL(clicked()), this, SLOT(tryLogin()));
 
     setFixedSize(280,110);
