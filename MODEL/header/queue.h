@@ -90,10 +90,9 @@ class Queue {
     iterator end() const;
     template <bool C> iterator insert(const Base_Iterator<C>&, const T&);
     template <bool C> iterator erase(const Base_Iterator<C>&);
-    iterator find(const T&) const;
+    virtual iterator search(const T&) const;
     iterator indexToIter(int);
     void clear();
-    void clean();
     void push_back(const T&);
     void pop_back();
     void push_front(const T&);
@@ -178,8 +177,6 @@ T& Queue<T>::operator[](int n) const {
   for(it = begin(); it != end() && n > 0; ++it, --n) {}
   return (it.iter)->info;
 }
-
-
 
 template <typename T>
 typename Queue<T>::iterator Queue<T>::begin() const {
