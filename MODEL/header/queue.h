@@ -266,7 +266,7 @@ typename Queue<T>::iterator Queue<T>::search(const T& key) const {
   iterator it;
   for(it = begin(); it != end() && !(it.iter->info == key); ++it) {}
   if(it == end()) return end();
-  else return it;
+  return it;
 }
 
 template <typename T>
