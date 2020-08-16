@@ -265,7 +265,7 @@ typename Queue<T>::iterator Queue<T>::erase(const Queue<T>::Base_Iterator<C>& it
 }
 
 template <typename T>
-typename Queue<T>::iterator Queue<T>::find(const T& key) const {
+typename Queue<T>::iterator Queue<T>::search(const T& key) const {
   iterator it;
   for(it = begin(); it != end() && !(it.iter->info == key); ++it) {}
   if(it == end()) return end();
@@ -284,30 +284,15 @@ void Queue<T>::clear() {
   try {
     if(empty()) throw Queue_Exception("The queue cannot be deleted as it's empty", 3);
     else {
-      SmartP q = first->next;
-      last = nullptr;
-      while(q != nullptr) {
-        first->next = nullptr;
-        q->prec = nullptr;
-        first = q;
-        q = q->next;
+    //toglie tutti i nodi dalla Queue
+      if(first!=nullptr) {
+        while(first!=nullptr) pop_front();
       }
-      first = nullptr;
     }
   } catch(const Queue_Exception& e) {
     std::cout << e.what() << std::endl;
     return;
   }
-}
-
-template <typename T>
-void Queue<T>::clean() {
-    //toglie tutti i nodi dalla Queue
-    if(first!=nullptr){
-        while(first!=nullptr){
-            pop_front();
-        }
-    }
 }
 
 template <typename T>
@@ -367,8 +352,6 @@ void Queue<T>::exportXmlData(QXmlStreamWriter& out){
     }
     out.writeEndElement();
 }
-
-
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Queue<T>& q) {
