@@ -90,7 +90,7 @@ class Queue {
     iterator end() const;
     template <bool C> iterator insert(const Base_Iterator<C>&, const T&);
     template <bool C> iterator erase(const Base_Iterator<C>&);
-    virtual iterator search(const T&) const;
+    iterator search(const T&) const;
     iterator indexToIter(int);
     void clear();
     void push_back(const T&);
