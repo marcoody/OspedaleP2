@@ -23,9 +23,7 @@ bool QueuePersone::search(const Persona* p) const {
 }
 
 bool QueuePersone::checkPassword(const Persona* p, string pw){
-    if(p){
-        return p->getPassword()== pw;
-    }
+    if(p) return p->getPassword() == pw;
     return 0;
 }
 
@@ -65,16 +63,21 @@ bool QueuePersone::importXml() {
                     //legge il nome della classe (tag persona)
                     std::string classname = (xmlInput.name().toString()).toStdString();
 
-                    try
-                    {
-
+                    try {
                         Persona* p = 0;
-                        if (classname == "MEDICO"){ p =Medico::importXml(xmlInput); }
-                        if (classname == "INFERMIERE"){ p = Infermiere::importXml(xmlInput);}
-                        if (classname == "RESPONSABILE"){ p = Responsabile::importXml(xmlInput);}
+                        switch(classname) {
+                            case "MEDICO": 
+                                p = Medico::importXml(xmlInput);
+                                break;
+                            case "INFERMIERE":
+                                p = Infermiere::importXml(xmlInput);
+                                break;
+                            case "RESPONSABILE":
+                                p = Responsabile::importXml(xmlInput);
+                                break;
+                        }
 
-                        if(p)
-                        {
+                        if(p) {
                             push_back(p->clone());
                             delete p;
                             ok = true;
