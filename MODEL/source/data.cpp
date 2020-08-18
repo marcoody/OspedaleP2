@@ -164,15 +164,33 @@ ostream &operator<<(ostream &os, const Data& d){
   return os << d._giorno << "/" << d._mese << "/" << d._anno;
 }
 
-ostream &operator<<(ostream &os, const giorni &g){
-    if(g==0){ return os<<"lunedi";}
-    if(g==1){return os<<"martedi";}
-    if(g==2){return os<<"mercoledi";}
-    if(g==3){return os<<"giovedi";}
-    if(g==4){return os<<"venerdi";}
-    if(g==5){return os<<"sabato";}
-    if(g==6){return os<<"domenica";}
-    else {return os;}
+ostream &operator<<(ostream &os, const giorni &g) {
+    switch(g) {
+      case 0:
+        return os << "lunedi";
+        break;
+      case 1:
+        return os << "martedi";
+        break;
+      case 2:
+        return os << "mercoledi";
+        break;
+      case 3:
+        return os << "giovedi";
+        break;
+      case 4:
+        return os << "venerdi";
+        break;
+      case 5:
+        return os << "sabato";
+        break;
+      case 6:
+        return os << "domenica";
+        break;
+      default:
+        return os;
+        break;
+    }
 }
 
 std::istream& operator >>(std::istream& is, Data& d){
@@ -188,40 +206,69 @@ std::istream& operator >>(std::istream& is, Data& d){
 }
 
 
-std::string giornoToString(giorni g){
-    std::string ris;
-    if(g==0){ ris="luendì"; }
-    else if(g==1){ ris="martedì"; }
-    else if(g==2){ ris="mercoledì"; }
-    else if(g==3){ ris="giovedì"; }
-    else if(g==4){ ris="venerdì"; }
-    else if(g==5){ ris="sabato"; }
-    else { ris="domenica"; }
-
-    return ris;
+std::string giornoToString(const giorni g) {
+    switch(g) {
+      case 0:
+        return "lunedi";
+        break;
+      case 1:
+        return "martedi";
+        break;
+      case 2:
+        return "mercoledi";
+        break;
+      case 3:
+        return "giovedi";
+        break;
+      case 4:
+        return "venerdi";
+        break;
+      case 5:
+        return "sabato";
+        break;
+      case 6
+        return "domenica";
+        break;
+    }
 }
 
-giorni stringToGiorni(std::string s){
-    giorni g;
-    if(s=="lunedì"){ g=giorni::lunedi; }
-    else if (s=="martedì"){ g=giorni::martedi; }
-    else if (s=="mercoledì"){ g=giorni::mercoledi; }
-    else if (s=="giovedì"){ g=giorni::giovedi; }
-    else if (s=="venerdì"){ g=giorni::venerdi; }
-    else if (s=="sabato"){ g=giorni::sabato; }
-    else { g=giorni::domenica; }
-
-    return g;
+giorni stringToGiorni(const std::string s){
+    if(s=="lunedì") { return giorni::lunedi; }
+    if(s=="martedì") { return giorni::martedi; }
+    if(s=="mercoledì") { return giorni::mercoledi; }
+    if(s=="giovedì") { return giorni::giovedi; }
+    if(s=="venerdì") { return giorni::venerdi; }
+    if(s=="sabato") { return giorni::sabato; }
+    if(s == "domenica") { return giorni::domenica; }
 }
 
 void avanzaGiorni(giorni & g){
-    if(g==0){ g=giorni::martedi; }
-    else if( g==1) { g=giorni::mercoledi; }
-    else if( g==2) { g=giorni::giovedi; }
-    else if( g==3) { g=giorni::venerdi; }
-    else if( g==4) { g=giorni::sabato; }
-    else if( g==5) { g=giorni::domenica; }
-    else { g=giorni::lunedi; }
+    switch(g) {
+      case martedi:
+        g = giorni::martedi;
+        break;
+      case 0:
+        g = giorni::martedi;
+        break;
+      case 1:
+        g = giorni::mercoledi;
+        break;
+      case 2:
+        g = giorni::giovedi;
+        break;
+      case 3:
+        g = giorni::venerdi;
+        break;
+      case 4:
+        g = giorni::sabato;
+        break;
+      case 5:
+        g = giorni::domenica;
+        break;
+      default:
+        g = giorni::lunedi;
+        break;
+    }
 }
 
 int giornoToInt(giorni g){
