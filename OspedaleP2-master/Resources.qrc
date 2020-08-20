@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>IMAGES/admin.svg</file>
+        <file>IMAGES/dialog.svg</file>
+        <file>IMAGES/error.svg</file>
+        <file>IMAGES/icona.svg</file>
+        <file>IMAGES/info.svg</file>
+        <file>IMAGES/login.png</file>
+        <file>IMAGES/warning.svg</file>
+        <file>IMG/admin.svg</file>
+        <file>IMG/csm_Login_c148e8b0a7.png</file>
+        <file>IMG/dialog.svg</file>
+        <file>IMG/error.svg</file>
+        <file>IMG/icona.svg</file>
+        <file>IMG/info.svg</file>
+        <file>IMG/login.png</file>
+        <file>IMG/ospedale.png</file>
+        <file>IMG/personedata.xml</file>
+        <file>IMG/warning.svg</file>
+    </qresource>
+</RCC>
