@@ -27,7 +27,7 @@ Turno* Turno_intero::importXml(QXmlStreamReader& in){
     QTime fine;
     string reparto;
     double paga_intero;
-    //legge dal file i tag e li memorizza in dataTurno e nOre
+    //legge dal file i tag e li memorizza in dataTurno e inizio, fine
     Turno::importXmlData(in ,giornoTurno, inizio, fine);
     Turno_regolare::importXmlData(in, reparto);
     Turno_intero::importXmlData(in, paga_intero);
