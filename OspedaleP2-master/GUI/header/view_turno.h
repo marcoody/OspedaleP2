@@ -29,7 +29,6 @@ protected:
     QFormLayout* layout;
     QPushButton* annullaButt;
     QPushButton* okButt;
-    QSpinBox* nOre;
 
     //modifica abdel
     QTimeEdit* oraInizio, *oraFine;

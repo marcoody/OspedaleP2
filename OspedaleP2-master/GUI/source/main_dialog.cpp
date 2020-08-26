@@ -27,7 +27,7 @@ void Main_dialog::setMenuBar()
     menubar = menuBar();
     //parent senza valore di default su alcune versioni di QT
     mbFile = new QMenu("File", nullptr);
-    mbLogOut = new QAction("Cambia utente", nullptr);
+    mbLogOut = new QAction("Cambia utente / LogOut", nullptr);
     mbEsci = new QAction("Esci", nullptr);
     mbFile->addAction(mbLogOut);
     mbFile->addSeparator();

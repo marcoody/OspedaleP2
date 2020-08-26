@@ -16,11 +16,10 @@ void view_turno_libero::build_field(){
 
 void view_turno_libero::build_field_only_libero(){
     Turno_libero* tl = dynamic_cast<Turno_libero*>(t);
-    nOre->setRange(0,24);
-    nOre->setValue(24);
-    //oraInizio->setDisabled(true);
-    //oraFine->setDisabled(true);
-    nOre->setDisabled(true);
+
+    oraInizio->setDisabled(true);
+    oraFine->setDisabled(true);
+
 
     permesso = new QComboBox();
     permesso->addItem("Sì");

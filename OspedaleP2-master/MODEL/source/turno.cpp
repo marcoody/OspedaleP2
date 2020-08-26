@@ -69,8 +69,10 @@ void Turno::importXmlData(QXmlStreamReader& in, giorni& giornoTurno, QTime& OraI
     giornoTurno= stringToGiorni(giornoStringa);
 
 
-    OraInizio= QTime::fromString(QString::fromStdString(inizioStringa));
-    OraFine= QTime::fromString(QString::fromStdString(fineStringa));
+    OraInizio= QTime::fromString(QString::fromStdString(inizioStringa),"h:m");
+    OraFine= QTime::fromString(QString::fromStdString(fineStringa),"h:m");
+
+
 }
 
 

@@ -65,6 +65,7 @@ bool QueuePersone::importXml() {
 
                     try {
                         Persona* p = 0;
+
                         if (classname == "MEDICO"){ p =Medico::importXml(xmlInput); }
                         if (classname == "INFERMIERE"){ p = Infermiere::importXml(xmlInput);}
                         if (classname == "RESPONSABILE"){ p = Responsabile::importXml(xmlInput);}
@@ -74,9 +75,10 @@ bool QueuePersone::importXml() {
                             push_back(p->clone());
                             delete p;
                             ok = true;
-                        }
+                        } else {
                         //porta il puntatore all'elemento successivo
-                        //xmlInput.skipCurrentElement();
+                        xmlInput.skipCurrentElement();
+                        }
                     }
                     catch(errore_tag e)
                     {

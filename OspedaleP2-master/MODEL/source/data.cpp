@@ -190,7 +190,7 @@ std::istream& operator >>(std::istream& is, Data& d){
 
 std::string giornoToString(giorni g){
     std::string ris;
-    if(g==0){ ris="luendì"; }
+    if(g==0){ ris="lunedì"; }
     else if(g==1){ ris="martedì"; }
     else if(g==2){ ris="mercoledì"; }
     else if(g==3){ ris="giovedì"; }

@@ -21,11 +21,12 @@ bool QueueTurni::importXml(QXmlStreamReader& in){
                     Turno* t = 0;
                     try
                     {
+
                         if (classname == "LIBERO"){ t = Turno_libero::importXml(in); }
                         else if (classname == "INTERO") { t = Turno_intero::importXml(in); }
                         else if (classname == "PARZIALE") { t = Turno_parziale::importXml(in); }
                         else if (classname == "STRAORDINARIO") { t = Turno_straordinario::importXml(in); }
-                        else {t = nullptr;}
+                        //else {t = nullptr;}
 
                         if(t)
                         {
@@ -35,6 +36,7 @@ bool QueueTurni::importXml(QXmlStreamReader& in){
                         }
                         //porta il puntatore all'elemento successivo
                         in.skipCurrentElement();
+
                     }
                     catch(errore_tag e)
                     {

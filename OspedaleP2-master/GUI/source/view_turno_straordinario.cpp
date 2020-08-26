@@ -22,9 +22,11 @@ void view_turno_straordinario::edit() const{
 void view_turno_straordinario::build_field(){
     view_turno_regolare::build_field();
     build_field_only_libero();
-    nOre->setDisabled(false);
-    nOre->setRange(1,24);
-    nOre->setValue(t->TotOre());
+
+    oraInizio->setDisabled(false);
+    oraFine->setDisabled(false);
+    permesso->setDisabled(true);
+
     Turno_straordinario* ts = dynamic_cast<Turno_straordinario*>(t); 
     paga_straordinario = new QLineEdit();
     paga_straordinario->setText(QString::fromStdString(std::to_string(ts->getPagaStraordinario())));

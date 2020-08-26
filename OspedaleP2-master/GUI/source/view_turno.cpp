@@ -11,14 +11,12 @@ view_turno::~view_turno() {};
 
 void view_turno::build_field(){
     layout = new QFormLayout(this);
-    nOre = new QSpinBox();
     oraInizio= new QTimeEdit();
     oraFine= new QTimeEdit();
 
-    nOre->setRange(0,12);
-    nOre->setValue(t->TotOre());
+    oraInizio->setTime(t->getInizio());
+    oraFine->setTime(t->getFine());
 
-    layout->addRow(new QLabel("*Numero di ore:"), nOre);
     layout->addRow(new QLabel("*Ore di Inizio:"), oraInizio);
     layout->addRow(new QLabel("*Ore di Fine:"), oraFine);
 }

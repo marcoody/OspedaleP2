@@ -14,12 +14,12 @@ public:
     view_turno_libero(Turno* turno, QWidget* parent = nullptr): view_turno(turno, parent){}
     virtual ~view_turno_libero();
 protected:
+    QComboBox* permesso;
     virtual void edit() const;
     virtual void build_field();
     void edit_only_libero() const;
     void build_field_only_libero();
-private:
-    QComboBox* permesso;
+
 };
 
 #endif // VIEW_TURNO_LIBERO_H

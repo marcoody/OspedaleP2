@@ -194,7 +194,7 @@ void Main_widget::editTurno(int t){
     int posTemp = elenco->currentRow();
     QStringList listaTurni;
 
-    if (dynamic_cast<Turno_straordinario*>(utenti[posTemp]->getTurni()[t])){
+    if (dynamic_cast<Turno_straordinario*>(utenti[posTemp]->getTurni()[t]) || dynamic_cast<Turno_libero*>(utenti[posTemp]->getTurni()[t])){
         listaTurni << "Intero";
         listaTurni << "Parziale";
         listaTurni << "Libero";
