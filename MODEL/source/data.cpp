@@ -226,7 +226,7 @@ std::string giornoToString(const giorni g) {
       case 5:
         return "sabato";
         break;
-      case 6
+      case 6:
         return "domenica";
         break;
     }
@@ -244,9 +244,6 @@ giorni stringToGiorni(const std::string s){
 
 void avanzaGiorni(giorni & g){
     switch(g) {
-      case martedi:
-        g = giorni::martedi;
-        break;
       case 0:
         g = giorni::martedi;
         break;
