@@ -64,7 +64,7 @@ void Persona::importXmlData(QXmlStreamReader & in, string & username, std::strin
     importTagXml(in, "cognome", cognome);
     string dataString;
     importTagXml(in, "dataNascita", dataString);
-    dataNascita = stringToData(dataString);
+    dataNascita = Data::stringToData(dataString);
     string genereString;
     importTagXml(in, "genere", genereString);
     if(genereString=="maschio" || genereString=="Maschio"){genere=gender::maschio;}

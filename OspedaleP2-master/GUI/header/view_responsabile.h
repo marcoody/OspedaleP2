@@ -9,7 +9,7 @@
 
 class view_responsabile : public view_persona {
 public:
-    view_responsabile(QueuePersone& lista, Persona* persona, QWidget* parent = nullptr): view_persona(lista,persona,parent){};
+    view_responsabile(QueuePersone& lista, Persona* persona,  bool ed = false, QWidget* parent = nullptr): view_persona(lista,persona,ed, parent){};
     virtual ~view_responsabile();
 protected:
     virtual void edit() const;

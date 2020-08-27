@@ -1,12 +1,14 @@
 #include "../header/turno.h"
 #include <QString>
 
-Turno::Turno(giorni g, QTime i, QTime f): giornoTurno(g), inizio(i), fine(f) {}
+Turno::Turno(giorni g, QTime i, QTime f, string rep): giornoTurno(g), inizio(i), fine(f), reparto(rep) {}
 
 //metodi get
 giorni Turno::getGiornoTurno() const { return giornoTurno; }
 QTime Turno::getInizio() const { return inizio;}
 QTime Turno::getFine() const { return fine; }
+
+std::string Turno::getReparto() const { return reparto; }
 
 std::string Turno::inizioStringa() const
 {
@@ -27,16 +29,25 @@ void Turno::setFine(QTime f){ fine=f;}
 
 double Turno::TotOre() const
 {
+    double tot;
     if(fine<inizio) {
         int secInizio=(inizio.hour()*3600.0f+inizio.minute()*60.0f+inizio.second());
         int secFine=(fine.hour()*3600.0f+fine.minute()*60.0f+fine.second())+24.f*3600.0f;
-        return (secFine-secInizio)/3600.0f;
+        tot = (secFine-secInizio)/3600.0f;
     }
     else {
         int secInizio=(inizio.hour()*3600.0f+inizio.minute()*60.0f+inizio.second());
         int secFine=(fine.hour()*3600.0f+fine.minute()*60.0f+fine.second());
-        return (secFine-secInizio)/3600.0f;
+        tot = (secFine-secInizio)/3600.0f;
     }
+
+    int p_intera = tot;
+    double p_fraz = tot - p_intera;
+
+    if(p_fraz <= 0.25){ return tot = p_intera; }
+    else if (p_fraz <= 0.75) { return tot = p_intera + 0.5; }
+    else { return tot=++p_intera; }
+
 
 }
 
@@ -49,7 +60,6 @@ void Turno::exportXml(QXmlStreamWriter& out) const{
 void Turno::exportXmlData(QXmlStreamWriter& out) const{
     string g = giornoToString(getGiornoTurno());
     out.writeTextElement("giornoTurno", QString::fromStdString(g));
-
     out.writeTextElement("OraInizio", QString::fromStdString(inizioStringa()));
     out.writeTextElement("OraFine", QString::fromStdString(fineStringa()));
 

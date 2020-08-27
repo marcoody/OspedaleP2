@@ -15,8 +15,8 @@ std::string giornoToString(giorni);
 giorni stringToGiorni(std::string);
 int giornoToInt (giorni);
 giorni intToGiorni( int);
-
 void avanzaGiorni(giorni&);
+
 
 class Data {
     friend ostream& operator<<(ostream&, const Data&);
@@ -44,6 +44,13 @@ public:
     void avanzaUnGiorno();
     std::string dataToString() const;
 
+    //funzioni statiche
+    static bool isBisestile(u_int a);
+    static int giorniNelMese(u_int m, u_int a);
+    static int contaCifre(int a);
+    static bool checkData(u_int g, u_int m, u_int a);
+    static Data stringToData(std::string);
+
 
     // Operatore di incremento prefisso
     Data& operator++();
@@ -57,13 +64,7 @@ public:
     giorni giornoSettimana()const;
 
 };
-//li metto fuori perchè non mi serve l'ogg di invocazione
-bool isBisestile(u_int a);
-int giorniNelMese(u_int m, u_int a);
-//la metto fuori perchè non voglio che abbia un ogg di invocazione
-int contaCifre(int a);
-bool checkData(u_int g, u_int m, u_int a);
-Data stringToData(std::string);
+
 ostream& operator<<(ostream&, const Data&);
 ostream& operator<<(ostream&, const giorni&);
 std::istream& operator>>(std::istream& in, Data& d);

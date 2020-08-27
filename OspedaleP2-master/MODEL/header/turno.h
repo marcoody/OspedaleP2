@@ -6,6 +6,7 @@
 #include <QXmlStreamWriter>
 #include "metodifreq.h"
 #include <QTime>
+#include <iostream>
 
 
 using std::string;
@@ -15,14 +16,16 @@ private:
     giorni giornoTurno;
     QTime inizio;
     QTime fine;
+    string reparto;
 
 public:
-    Turno(giorni, QTime=QTime(0,0), QTime=QTime(0,0));
+    Turno(giorni, QTime=QTime(0,0), QTime=QTime(0,0), string= "");
 
     //metodi get
     giorni getGiornoTurno() const;
     QTime getInizio() const;
     QTime getFine() const;
+    string getReparto() const;
 
     string inizioStringa() const;
     string fineStringa() const;

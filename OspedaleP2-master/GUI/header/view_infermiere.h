@@ -10,7 +10,7 @@
 
 class view_infermiere : public view_persona {
 public:
-    view_infermiere(QueuePersone& lista, Persona* persona, QWidget* parent = nullptr): view_persona(lista,persona,parent){}
+    view_infermiere(QueuePersone& lista, Persona* persona, bool ed = false, QWidget* parent = nullptr): view_persona(lista,persona,ed,parent){}
     virtual ~view_infermiere();
 protected:
     virtual void edit() const;

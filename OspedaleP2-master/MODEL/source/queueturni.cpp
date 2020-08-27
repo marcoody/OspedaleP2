@@ -1,7 +1,7 @@
 #include "../header/queueturni.h"
 
 QString QueueTurni::startTag = "TURNI";
-QString QueueTurni::defaultFile = "turnidata.xml";
+QString QueueTurni::defaultFile = "personedata.xml";
 
 QString QueueTurni::getStartTagXml() const{ return startTag; }
 QString QueueTurni::getDefaultFile() const {return defaultFile; }
@@ -40,10 +40,15 @@ bool QueueTurni::importXml(QXmlStreamReader& in){
                     }
                     catch(errore_tag e)
                     {
+
                         //salta al prossimo elemento
                         while (!in.isEndElement() || in.name() != QString::fromStdString(classname))
                             in.readNext();
+
                     }
+
+
+
                }
             }
         }

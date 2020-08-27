@@ -28,7 +28,7 @@ Turno* Turno_libero::importXml(QXmlStreamReader& in){
     QTime inizio;
     QTime fine;
 
-    //legge dal file i tag e li memorizza in dataTurno e nOre
+    //legge dal file i tag e li memorizza in dataTurno
     Turno::importXmlData(in, giornoTurno, inizio, fine);
     Turno_libero::importXmlData(in,permesso);
     return new Turno_libero(giornoTurno, inizio, fine, permesso);

@@ -2,7 +2,8 @@
 
 //costruttori
 Data::Data(u_int g, u_int m, u_int a){
-  if(checkData(g,m,a)) {
+  bool c = Data::checkData(g,m,a);
+  if(c) {
     _giorno = g; _mese = m;
     if(contaCifre(a)==2){a+=1900;}
     _anno=a;
@@ -66,7 +67,7 @@ std::string Data::dataToString() const{
     return getGiornoString()+"/"+getMeseString()+"/"+getAnnoString();
 }
 
-Data stringToData(std::string s){
+Data Data::stringToData(std::string s){
     int g,m,a;
     const char* c= s.c_str();
     sscanf(c,"%2d/%2d/%4d", &g, &m, &a);
@@ -118,8 +119,8 @@ int Data::giorniDal1Gen1900() const{
 giorni Data::giornoSettimana() const{ return giorni(giorniDal1Gen1900()%7);}
 
 
-//METODI ESTERNI
-bool isBisestile(u_int a){
+//METODI statici
+bool Data::isBisestile(u_int a){
   bool bisestile = false;
   if(a % 4 == 0) {
     bisestile = true;
@@ -130,7 +131,7 @@ bool isBisestile(u_int a){
   }
   return bisestile;
 }
-int giorniNelMese(u_int m, u_int a){
+int Data::giorniNelMese(u_int m, u_int a){
     if(m==2 && isBisestile(a)){return 29;}
     else if(m==2 && !isBisestile(a)){return 28;}
     else if(m==4 || m==6 || m==9 || m==11){return 30;}
@@ -138,7 +139,7 @@ int giorniNelMese(u_int m, u_int a){
 }
 //checkdata esterna alla classe perchè volevo assicurarmi che un oggetto data costruito fosse SEMPRE legittimo
 //-> se avessi messo la funz all'interno, avrebbe dovuro avere un ogg di invocazione di tipo data e non voglio che vengano creati data non legittimi
-int contaCifre(int a){
+int Data::contaCifre(int a){
     bool end=false; int cifre=1;
     while(!end){
         a/=10;
@@ -147,7 +148,7 @@ int contaCifre(int a){
     }
     return cifre;
 }
-bool checkData(u_int g, u_int m, u_int a){
+bool Data::checkData(u_int g, u_int m, u_int a){
   if(m > 12 || g > 31) { return false; }
   //controllo che gli anni siano scritti nella maniera corretta cioè AAAA
   int cifre=contaCifre(a);
@@ -160,6 +161,8 @@ bool checkData(u_int g, u_int m, u_int a){
   return true;
 }
 
+
+//METODI ESTERNI
 ostream &operator<<(ostream &os, const Data& d){
   return os << d._giorno << "/" << d._mese << "/" << d._anno;
 }

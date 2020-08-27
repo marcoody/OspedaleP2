@@ -39,6 +39,8 @@ void view_persona::build_field(){
     layout->addRow(new QLabel("*Data di nascita:"), dataNascita);
     layout->addRow(new QLabel("*Genere:"), genere);
 
+    if(mod){ username->setDisabled(true);}
+
 }
 
 void view_persona::buildButt()
@@ -70,7 +72,7 @@ bool view_persona::check() const{
 
     //controllo duplicati username (nome e cognome possono essere anche uguali)
 
-    if(utenti.search(username->text().toStdString())){
+    if(utenti.search(username->text().toStdString()) && !mod){
         QMessageBox avviso;
         avviso.setWindowIcon(QIcon(QPixmap(":/warning")));
         avviso.setText("Impossibile aggiungere l'utente, è già presente nel sistema");

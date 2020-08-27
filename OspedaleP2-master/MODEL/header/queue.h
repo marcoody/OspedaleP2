@@ -264,7 +264,7 @@ typename Queue<T>::iterator Queue<T>::erase(const Queue<T>::Base_Iterator<C>& it
 template <typename T>
 typename Queue<T>::iterator Queue<T>::search(const T& key) const {
   iterator it;
-  for(it = begin(); it != end() && !(it.iter->info == key); ++it) {}
+  for( it = begin(); it != end() && !(it.iter->info == key); ++it) {}
   if(it == end()) return end();
   return it;
 }

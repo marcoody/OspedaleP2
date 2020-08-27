@@ -18,12 +18,13 @@
 class view_persona : public QWidget{
     Q_OBJECT
 public:
-    view_persona(QueuePersone& lista, Persona* persona, QWidget* parent = nullptr): QWidget(parent), utenti(lista), p(persona){};
+    view_persona(QueuePersone& lista, Persona* persona, bool ed = false, QWidget* parent = nullptr): QWidget(parent), mod(ed), utenti(lista), p(persona) {};
     void buildGUI();
     virtual ~view_persona();
 
 private:
     void buildButt();
+    bool mod; //booleano di modifica
 protected:
     virtual bool check() const; //controlla validità dati inseriti
     virtual void edit() const; //modifica campi e converte da QString a tipi corretti

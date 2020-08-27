@@ -25,7 +25,7 @@
 
 class view_UserBuilder{
 public:
-    static view_persona* build(QueuePersone&, Persona*);
+    static view_persona* build(QueuePersone&, Persona*, bool);
     static view_turno* buildT(Turno*);
     virtual ~view_UserBuilder() = 0;
 };

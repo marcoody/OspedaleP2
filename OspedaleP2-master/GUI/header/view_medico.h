@@ -13,7 +13,7 @@
 class view_medico : public view_persona{
 
 public:
-    view_medico(QueuePersone& lista, Persona* persona, QWidget* parent = nullptr): view_persona(lista,persona, parent){}
+    view_medico(QueuePersone& lista, Persona* persona,bool ed = false, QWidget* parent = nullptr): view_persona(lista,persona, ed, parent){}
     virtual ~view_medico();
 
 protected:

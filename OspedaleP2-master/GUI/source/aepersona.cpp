@@ -1,14 +1,20 @@
 #include "../header/aepersona.h"
 
 AEPersona::AEPersona(QueuePersone& lista, Persona* toEdit, QWidget* parent) : QDialog(parent), utenti(lista), p(toEdit){
-    if(p->getUsername() == "")
+    bool ed = 0;
+    if(p->getUsername() == ""){
         setWindowTitle("Creazione nuovo utente");
-    else
+        ed = false;
+    }
+    else{
         setWindowTitle("Modifica utente");
+        ed = true;
+     }
+
     setWindowIcon(QIcon(QPixmap(":/dialog")));
 
     layout = new QFormLayout(this);
-    if(view_persona* vp = view_UserBuilder::build(utenti, p))
+    if(view_persona* vp = view_UserBuilder::build(utenti, p, ed))
     {
         vp->buildGUI();
         layout->addWidget(vp);
