@@ -40,12 +40,12 @@ void view_turno_straordinario::build_field(){
 }
 
 bool view_turno_straordinario::check() const{
-    double check = std::stoul(paga_straordinario->text().toStdString());
+    double check = std::stod(paga_straordinario->text().toStdString());
     if( check < 0){
         QMessageBox msgErr;
         msgErr.setWindowTitle("Errore!");
-        msgErr.setWindowIcon(QIcon(QPixmap(":/warning")));
         msgErr.setText("Retribuzione negativa non valida");
+        msgErr.setWindowIcon(QIcon(QPixmap(":/IMG/warning")));
         msgErr.exec();
         return false;
     }

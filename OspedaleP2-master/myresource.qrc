@@ -1,10 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>IMG/admin.svg</file>
-        <file>IMG/csm_Login_c148e8b0a7.png</file>
         <file>IMG/dialog.svg</file>
         <file>IMG/error.svg</file>
-        <file>IMG/icona.svg</file>
         <file>IMG/info.svg</file>
         <file>IMG/login.png</file>
         <file>IMG/ospedale.png</file>

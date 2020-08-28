@@ -26,11 +26,11 @@ void view_turno_parziale::build_field(){
 }
 
 bool view_turno_parziale::check() const{
-    double check = std::stoul(paga_parziale->text().toStdString());
+    double check = std::stod(paga_parziale->text().toStdString());
     if( check < 0){
         QMessageBox msgErr;
         msgErr.setWindowTitle("Errore!");
-        msgErr.setWindowIcon(QIcon(QPixmap(":/warning")));
+        msgErr.setWindowIcon(QIcon(QPixmap(":/IMG/warning")));
         msgErr.setText("Retribuzione negativa non valida");
         msgErr.exec();
         return false;

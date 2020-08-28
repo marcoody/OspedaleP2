@@ -64,7 +64,7 @@ bool view_persona::check() const{
     if( username->text() == "" || password->text() == "" || nome->text() == "" || cognome->text() == ""){
         QMessageBox msgErr;
         msgErr.setWindowTitle("Errore!");
-        msgErr.setWindowIcon(QIcon(QPixmap(":/warning")));
+        msgErr.setWindowIcon(QIcon(QPixmap(":/IMG/warning")));
         msgErr.setText("Controlla di aver inserito tutti i campi obbligatori");
         msgErr.exec();
         return false;
@@ -74,7 +74,7 @@ bool view_persona::check() const{
 
     if(utenti.search(username->text().toStdString()) && !mod){
         QMessageBox avviso;
-        avviso.setWindowIcon(QIcon(QPixmap(":/warning")));
+        avviso.setWindowIcon(QIcon(QPixmap(":/IMG/warning")));
         avviso.setText("Impossibile aggiungere l'utente, è già presente nel sistema");
         avviso.exec();
         return false;
@@ -116,7 +116,7 @@ void view_persona::checkAndEdit(){
     {
         QMessageBox msgErr;
         msgErr.setWindowTitle("Errore!");
-        msgErr.setWindowIcon(QIcon(QPixmap(":/error")));
+        msgErr.setWindowIcon(QIcon(QPixmap(":/IMG/error")));
         msgErr.setText("Dati invaliti!");
     }
 }

@@ -56,7 +56,7 @@ void view_turno::checkAndEdit(){
     else {
         QMessageBox msgErr;
         msgErr.setWindowTitle("Errore!");
-        msgErr.setWindowIcon(QIcon(QPixmap(":/error")));
+        msgErr.setWindowIcon(QIcon(QPixmap(":/IMG/error")));
         msgErr.setText("Dati invalidi!");
     }
 }

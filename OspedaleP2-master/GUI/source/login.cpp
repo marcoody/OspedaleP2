@@ -59,7 +59,7 @@ void Login::createLayoutLogin()
     tname = new QLineEdit();
     tpass = new QLineEdit();
     tpass->setEchoMode(QLineEdit::Password);
-    layoutLogin->addWidget(lImgLogin, 0, 0, 4, 1); //si "mangia" 4 righe
+    layoutLogin->addWidget(lImgLogin, 0, 0, 4, 1);
     layoutLogin->addWidget(lname, 1, 2);
     layoutLogin->addWidget(tname, 1, 3);
     layoutLogin->addWidget(lpass, 2, 2);

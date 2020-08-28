@@ -21,7 +21,7 @@ protected:
     virtual void build_field();
 
 private:
-    QLineEdit* reparto;
+    QLineEdit* specializzazione;
     QComboBox* chirurgia;
 
 

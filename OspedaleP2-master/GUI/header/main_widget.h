@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QScrollArea>
@@ -18,7 +19,6 @@
 #include "../../MODEL/header/userbuilder.h"
 #include "../../GUI/header/turniwidget.h"
 #include "../../GUI/header/eturno.h"
-#include <iostream>
 
 class Main_widget: public QWidget {
     Q_OBJECT
@@ -35,6 +35,8 @@ private:
     turniWidget* turniwidget;
     QLabel* info;
     QScrollArea* infoView;
+
+    QVBoxLayout* bottoniLayout;
 
     QLineEdit* search;
     QHBoxLayout* radioLayout;

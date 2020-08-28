@@ -11,7 +11,7 @@ AEPersona::AEPersona(QueuePersone& lista, Persona* toEdit, QWidget* parent) : QD
         ed = true;
      }
 
-    setWindowIcon(QIcon(QPixmap(":/dialog")));
+    setWindowIcon(QIcon(QPixmap(":/IMG/dialog")));
 
     layout = new QFormLayout(this);
     if(view_persona* vp = view_UserBuilder::build(utenti, p, ed))
@@ -26,7 +26,7 @@ AEPersona::AEPersona(QueuePersone& lista, Persona* toEdit, QWidget* parent) : QD
     {
         //in caso di nullprt
         layout->addRow(new QLabel("L'oggetto passato è invalido, impossibile proseguire"));
-        setWindowIcon(QIcon(QPixmap(":/error")));
+        setWindowIcon(QIcon(QPixmap(":/IMG/error")));
     }
 }
 

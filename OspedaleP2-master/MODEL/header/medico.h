@@ -8,19 +8,19 @@ using std::string;
 
 class Medico: public Persona{
 private:
-    string reparto;
+    string specializzazione;
     bool chirurgo;
 
 
 public:
-    Medico(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, const QueueTurni& = QueueTurni(), string rep = "", bool chir = false);
+    Medico(string, string, string = "", string ="", const Data& = Data(), const gender& = gender::altro, const QueueTurni& = QueueTurni(), string spec = "", bool chir = false);
 
     //get
-    string getReparto() const;
+    string getSpecializzazione() const;
     bool isChirurgo() const;
 
     //set
-    void setReparto(string&);
+    void setSpecializzazione(string&);
     void setChirurgo(bool);
 
     //permessi

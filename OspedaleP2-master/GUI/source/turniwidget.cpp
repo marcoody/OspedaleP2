@@ -7,25 +7,25 @@ turniWidget::turniWidget(QWidget* parent): QWidget(parent){
     setLayout(layout);
 
     lunButt = new QPushButton();
-    lunButt->setFixedSize(110,100);
+    lunButt->setFixedSize(120,100);
 
     marButt = new QPushButton();
-    marButt->setFixedSize(110,100);
+    marButt->setFixedSize(120,100);
 
     merButt = new QPushButton();
-    merButt->setFixedSize(110,100);
+    merButt->setFixedSize(120,100);
 
     gioButt = new QPushButton();
-    gioButt->setFixedSize(110,100);
+    gioButt->setFixedSize(120,100);
 
     venButt = new QPushButton();
-    venButt->setFixedSize(110,100);
+    venButt->setFixedSize(120,100);
 
     sabButt = new QPushButton();
-    sabButt->setFixedSize(110,100);
+    sabButt->setFixedSize(120,100);
 
     domButt = new QPushButton();
-    domButt->setFixedSize(110,100);
+    domButt->setFixedSize(120,100);
 
     layout->addWidget(lunButt);
     layout->addWidget(marButt);
@@ -63,13 +63,35 @@ void turniWidget::refreshButtons(Persona* p){
     const std::string oreDomenica = std::to_string(c[6]->TotOre());
     const auto dom = oreDomenica.find(".");
 
-    lunButt->setText(QString::fromStdString("LUNEDÌ\n"+ oreLunedi.substr(0, lun+5)+ " ore\n" + "Inizio alle: " + (c[0]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[0]->getFine().toString("hh:mm")).toStdString()));
-    marButt->setText(QString::fromStdString("MARTEDÌ\n"+ oreMartedi.substr(0, mar+5) + " ore\n" + "Inizio alle: " + (c[1]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[1]->getFine().toString("hh:mm")).toStdString()));
-    merButt->setText(QString::fromStdString("MERCOLEDÌ\n"+ oreMercoledi.substr(0, mer+5) + " ore\n" + "Inizio alle: " + (c[2]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[2]->getFine().toString("hh:mm")).toStdString()));
-    gioButt->setText(QString::fromStdString("GIOVEDÌ\n"+ oreGiovedi.substr(0, gio+5) + " ore\n" + "Inizio alle: " + (c[3]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[3]->getFine().toString("hh:mm")).toStdString()));
-    venButt->setText(QString::fromStdString("VENERDÌ\n"+ oreVenerdi.substr(0, ven+5) + " ore\n" + "Inizio alle: " + (c[4]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[4]->getFine().toString("hh:mm")).toStdString()));
-    sabButt->setText(QString::fromStdString("SABATO\n"+ oreSabato.substr(0, sab+5) + " ore\n" + "Inizio alle: " + (c[5]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[5]->getFine().toString("hh:mm")).toStdString()));
-    domButt->setText(QString::fromStdString("DOMENICA\n"+ oreDomenica.substr(0, dom+5) + " ore\n" + "Inizio alle: " + (c[6]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[6]->getFine().toString("hh:mm")).toStdString()));
+    Turno_regolare* test = dynamic_cast<Turno_regolare*>(c[0]);
+    const std::string repLunedi = test!=0 ? "\n"+ test->getReparto() : "";
+
+    test = dynamic_cast<Turno_regolare*>(c[1]);
+    const std::string repMartedi = test!=0 ? "\n"+test->getReparto() : "";
+
+    test = dynamic_cast<Turno_regolare*>(c[2]);
+    const std::string repMercoledi = test!=0 ? "\n"+test->getReparto() : "";
+
+    test = dynamic_cast<Turno_regolare*>(c[3]);
+    const std::string repGiovedi = test!=0 ? "\n"+test->getReparto() : "";
+
+    test = dynamic_cast<Turno_regolare*>(c[4]);
+    const std::string repVenerdi = test!=0 ? "\n"+test->getReparto() : "";
+
+    test = dynamic_cast<Turno_regolare*>(c[5]);
+    const std::string repSabato= test!=0 ? "\n"+test->getReparto() : "";
+
+    test = dynamic_cast<Turno_regolare*>(c[6]);
+    const std::string repDomenica= test!=0 ? "\n"+test->getReparto() : "";
+
+
+    lunButt->setText(QString::fromStdString("LUNEDÌ\n"+ oreLunedi.substr(0, lun+5)+ " ore\n" + "Inizio alle: " + (c[0]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[0]->getFine().toString("hh:mm")).toStdString() + repLunedi));
+    marButt->setText(QString::fromStdString("MARTEDÌ\n"+ oreMartedi.substr(0, mar+5) + " ore\n" + "Inizio alle: " + (c[1]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[1]->getFine().toString("hh:mm")).toStdString() + repMartedi));
+    merButt->setText(QString::fromStdString("MERCOLEDÌ\n"+ oreMercoledi.substr(0, mer+5) + " ore\n" + "Inizio alle: " + (c[2]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[2]->getFine().toString("hh:mm")).toStdString() + repMercoledi));
+    gioButt->setText(QString::fromStdString("GIOVEDÌ\n"+ oreGiovedi.substr(0, gio+5) + " ore\n" + "Inizio alle: " + (c[3]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[3]->getFine().toString("hh:mm")).toStdString() + repGiovedi));
+    venButt->setText(QString::fromStdString("VENERDÌ\n"+ oreVenerdi.substr(0, ven+5) + " ore\n" + "Inizio alle: " + (c[4]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[4]->getFine().toString("hh:mm")).toStdString() + repVenerdi));
+    sabButt->setText(QString::fromStdString("SABATO\n"+ oreSabato.substr(0, sab+5) + " ore\n" + "Inizio alle: " + (c[5]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[5]->getFine().toString("hh:mm")).toStdString() + repSabato));
+    domButt->setText(QString::fromStdString("DOMENICA\n"+ oreDomenica.substr(0, dom+5) + " ore\n" + "Inizio alle: " + (c[6]->getInizio().toString("hh:mm")).toStdString() + "\n" + "Fine alle: " + (c[6]->getFine().toString("hh:mm")).toStdString() + repDomenica));
 
 
     QPalette pal0 = lunButt->palette();

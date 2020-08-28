@@ -2,7 +2,7 @@
 
 ETurno::ETurno(Turno* toEdit, QWidget* parent) : QDialog(parent), t(toEdit){
     setWindowTitle("Modifica turno "+ QString::fromStdString(giornoToString(t->getGiornoTurno())));
-    setWindowIcon(QIcon(QPixmap(":/dialog")));
+    setWindowIcon(QIcon(QPixmap(":/IMG/dialog")));
 
     layout = new QFormLayout(this);
 
@@ -17,7 +17,7 @@ ETurno::ETurno(Turno* toEdit, QWidget* parent) : QDialog(parent), t(toEdit){
     else{
         //in caso di nullprt
         layout->addRow(new QLabel("L'oggetto passato è invalido, impossibile proseguire"));
-        setWindowIcon(QIcon(QPixmap(":/error")));
+        setWindowIcon(QIcon(QPixmap(":/IMG/error")));
     }
 
 }

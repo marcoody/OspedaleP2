@@ -16,7 +16,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    MODEL/source/orario.cpp \
     main.cpp \
     MODEL/source/data.cpp \
     MODEL/source/persona.cpp \
@@ -55,7 +54,6 @@ SOURCES += \
 
 HEADERS += \
     MODEL/header/data.h \
-    MODEL/header/orario.h \
     MODEL/header/persona.h \
     MODEL/header/queue.h \
     MODEL/header/medico.h \

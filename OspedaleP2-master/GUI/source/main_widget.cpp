@@ -3,26 +3,31 @@
 Main_widget::Main_widget(QueuePersone& _utenti, Persona* utenteAttuale, QWidget* parent): QWidget(parent), utenti(_utenti), chiamante(utenteAttuale){
     grid= new QGridLayout();
     setLayout(grid);
+    bottoniLayout= new QVBoxLayout;
 
-    //bottoni
+
+
+    //Bottoni
     addButt = new QPushButton("Aggiungi un utente");
-    grid->addWidget(addButt,4,0);
+    bottoniLayout->addWidget(addButt);
     addButt->setDisabled(true);
 
     editButt = new QPushButton("Modifica utente");
-    grid->addWidget(editButt,5,0);
+    bottoniLayout->addWidget(editButt);
     editButt->setDisabled(true);
 
     deleteButt = new QPushButton("Elimina utente");
-    grid->addWidget(deleteButt,6,0);
+    bottoniLayout->addWidget(deleteButt);
     deleteButt->setDisabled(true);
 
     sortName = new QPushButton("Riordina per cognome");
-    grid->addWidget(sortName, 1,0);
+    bottoniLayout->addWidget(sortName);
 
     stipendioButt = new QPushButton("Calcola stipendio");
     stipendioButt->setDisabled(true);
-    grid->addWidget(stipendioButt,2,0);
+    bottoniLayout->addWidget(stipendioButt);
+
+    grid->addLayout(bottoniLayout,1,0);
 
     //lista utenti e info
     elenco = new QListWidget();
@@ -32,15 +37,18 @@ Main_widget::Main_widget(QueuePersone& _utenti, Persona* utenteAttuale, QWidget*
     infoView->setWidget(info);
     info->setText("Nessun utente selezionato.");
     info->setFixedWidth(400);
+    infoView->setMaximumHeight(500);
     info->setWordWrap(true);
-    infoView->setFixedWidth(400);
+    elenco->setFixedWidth(300);
+    elenco->setMaximumHeight(500);
+    infoView->setMinimumWidth(500);
     grid->addWidget(infoView,0,1,1,2);
 
 
     //widget Turno
     turniwidget = new turniWidget();
     turniwidget->disableButt();
-    grid->addWidget(turniwidget,2,1,1,1);
+    grid->addWidget(turniwidget,1,1,1,1);
 
 
     connect(deleteButt, SIGNAL(clicked()), this, SLOT(deleteSelected()));
@@ -93,9 +101,9 @@ void Main_widget::createSearch(){
     cercaLabel = new QLabel("Cerca:");
     cercaLabel->setMaximumHeight(18);
     cercaLabel->setMinimumHeight(18);
-    grid->addWidget(cercaLabel,7,1);
+    grid->addWidget(cercaLabel,2,1);
     search = new QLineEdit();
-    grid->addWidget(search,8,1);
+    grid->addWidget(search,3,1);
     radioLayout = new QHBoxLayout();
     radioMedico = new QRadioButton("Medico");
     radioInfermiere = new QRadioButton("Infermiere");
@@ -107,7 +115,7 @@ void Main_widget::createSearch(){
     radioLayout->addWidget(radioInfermiere);
     radioLayout->addWidget(radioResponsabile);
     radioLayout->addWidget(radioTutti);
-    grid->addLayout(radioLayout,9,1);
+    grid->addLayout(radioLayout,4,1);
 
     connect(search, SIGNAL(textEdited(const QString&)), this, SLOT(filtra()));
     connect(radioMedico, SIGNAL(clicked()), this, SLOT(filtra()));
@@ -274,7 +282,7 @@ void Main_widget::addPersona(){
             QMessageBox msgErr;
             msgErr.setWindowTitle("Errore!");
             msgErr.setText("L'impiego inserito è invalido.");
-            msgErr.setWindowIcon(QIcon(QPixmap(":/error")));
+            msgErr.setWindowIcon(QIcon(QPixmap(":/IMG/error")));
             msgErr.exec();
             elenco->setCurrentRow(posTemp);
             emit changeStatus("Errore durante la creazione dell'utente");

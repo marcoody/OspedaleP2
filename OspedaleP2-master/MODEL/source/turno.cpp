@@ -1,14 +1,13 @@
 #include "../header/turno.h"
 #include <QString>
 
-Turno::Turno(giorni g, QTime i, QTime f, string rep): giornoTurno(g), inizio(i), fine(f), reparto(rep) {}
+Turno::Turno(giorni g, QTime i, QTime f): giornoTurno(g), inizio(i), fine(f) {}
 
 //metodi get
 giorni Turno::getGiornoTurno() const { return giornoTurno; }
 QTime Turno::getInizio() const { return inizio;}
 QTime Turno::getFine() const { return fine; }
 
-std::string Turno::getReparto() const { return reparto; }
 
 std::string Turno::inizioStringa() const
 {
