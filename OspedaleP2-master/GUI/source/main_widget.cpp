@@ -300,8 +300,9 @@ void Main_widget::deleteSelected()
     //clicca sì
     if (ok == 0)
     {
-        utenti.erase(utenti.indexToIter(elenco->currentRow()));
+        int tmp = elenco->currentRow();
         elenco->takeItem(elenco->currentIndex().row());
+        utenti.erase(utenti.indexToIter(tmp));
         utenti.exportXml();
         clearSelection();
         emit changeStatus("File eliminato con successo");
