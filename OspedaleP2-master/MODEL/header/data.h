@@ -11,6 +11,7 @@ using std::ostream;
 #define u_int unsigned short
 
 enum giorni {lunedi=0, martedi=1, mercoledi=2, giovedi=3, venerdi=4, sabato=5, domenica=6};
+
 std::string giornoToString(giorni);
 giorni stringToGiorni(std::string);
 int giornoToInt (giorni);

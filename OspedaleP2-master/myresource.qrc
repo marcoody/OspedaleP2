@@ -1,12 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>IMG/admin.svg</file>
-        <file>IMG/dialog.svg</file>
         <file>IMG/error.svg</file>
         <file>IMG/info.svg</file>
         <file>IMG/login.png</file>
         <file>IMG/ospedale.png</file>
         <file>IMG/personedata.xml</file>
         <file>IMG/warning.svg</file>
+        <file>IMG/dialog.png</file>
     </qresource>
 </RCC>

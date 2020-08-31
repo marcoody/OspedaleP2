@@ -74,6 +74,7 @@ class Queue {
     SmartP first;
     SmartP last;
     static unsigned int _size;
+
   public:
     // Iteratori
     typedef Base_Iterator<false> iterator;
