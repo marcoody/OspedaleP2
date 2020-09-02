@@ -13,9 +13,7 @@ class Queue_Exception : public std::exception {
     std::string error_msg;
     int error_number;
   public:
-    Queue_Exception(const std::string& err_msg, int err_num) :
-      error_msg(err_msg),
-      error_number(err_num) {}
+    Queue_Exception(const std::string& err_msg, int err_num) : error_msg(err_msg), error_number(err_num) {}
     virtual const char* what() const throw() {
       std::string error = "Error " + std::to_string(error_number) + ": " + error_msg;
       return error.c_str();
@@ -104,7 +102,7 @@ class Queue {
     friend std::ostream& operator<< <T>(std::ostream&, const Queue<T>&);
 };
 
-/* Metodi si SmartP */
+/* Metodi di SmartP */
 
 // Distruttore
 template <typename T>

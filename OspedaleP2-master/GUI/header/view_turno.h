@@ -15,7 +15,7 @@ class view_turno: public QWidget{
 public:
     view_turno(Turno* turno, QWidget* parent = nullptr): QWidget(parent), t(turno){}
     void buildGUI();
-    virtual ~view_turno();
+    virtual ~view_turno() = 0;
 
 private:
     void buildButt();
@@ -29,8 +29,6 @@ protected:
     QFormLayout* layout;
     QPushButton* annullaButt;
     QPushButton* okButt;
-
-    //modifica abdel
     QTimeEdit* oraInizio, *oraFine;
 
 

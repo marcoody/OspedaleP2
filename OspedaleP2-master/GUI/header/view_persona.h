@@ -20,7 +20,7 @@ class view_persona : public QWidget{
 public:
     view_persona(QueuePersone& lista, Persona* persona, bool ed = false, QWidget* parent = nullptr): QWidget(parent), mod(ed), utenti(lista), p(persona) {};
     void buildGUI();
-    virtual ~view_persona();
+    virtual ~view_persona() = 0;
 
 private:
     void buildButt();

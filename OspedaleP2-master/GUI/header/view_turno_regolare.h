@@ -12,7 +12,7 @@
 class view_turno_regolare : public virtual view_turno{
 public:
     view_turno_regolare(Turno* turno,QWidget* parent = nullptr): view_turno(turno, parent){}
-    virtual ~view_turno_regolare();
+    virtual ~view_turno_regolare() = 0;
 protected:
     virtual void edit() const;
     virtual void build_field();
