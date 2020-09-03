@@ -1,29 +1,25 @@
 #include "../header/turno_parziale.h"
 //costruttore
-Turno_parziale::Turno_parziale(giorni d, QTime i, QTime f, string r, bool c, double p): Turno(d,i,f), Turno_regolare(d,i,f,r), daContratto(c), paga_parziale(p){};
+Turno_parziale::Turno_parziale(giorni d, QTime i, QTime f, string r, double p): Turno(d,i,f), Turno_regolare(d,i,f,r), paga_parziale(p){};
 
 //metodi get
-bool Turno_parziale::getDaContratto() const {return daContratto; }
+
 double Turno_parziale::getPagaParziale() const { return paga_parziale; }
 
 //metodi set
-void Turno_parziale::setDaContratto(bool c) { daContratto=c; }
+
 void Turno_parziale::setPagaParziale(double p) { paga_parziale=p; }
 
 //metodi export
 void Turno_parziale::exportXmlData(QXmlStreamWriter& out) const{
     Turno_regolare::exportXmlData(out);
-    out.writeTextElement("daContratto", QString::fromStdString(std::to_string( getDaContratto())));
     out.writeTextElement("paga_parziale", QString::fromStdString(std::to_string(getPagaParziale())));
 }
 
 //metodi import
-void Turno_parziale::importXmlData(QXmlStreamReader& in, bool& c, double& paga_parziale){
+void Turno_parziale::importXmlData(QXmlStreamReader& in, double& paga_parziale){
     string pagaString;
-    string cString;
-    importTagXml(in, "daContratto", cString);
     importTagXml(in, "paga_parziale", pagaString);
-    c = std::stod(cString);
     paga_parziale = std::stod(pagaString);
 }
 
@@ -32,13 +28,12 @@ Turno* Turno_parziale::importXml(QXmlStreamReader& in){
     string reparto;
     QTime inizio;
     QTime fine;
-    bool daContratto;
     double paga_parziale;
     //legge dal file i tag e li memorizza in dataTurno e nOre
     Turno::importXmlData(in ,giornoTurno, inizio, fine);
     Turno_regolare::importXmlData(in, reparto);
-    Turno_parziale::importXmlData(in, daContratto, paga_parziale);
-    return new Turno_parziale(giornoTurno, inizio, fine, reparto, daContratto, paga_parziale);
+    Turno_parziale::importXmlData(in,paga_parziale);
+    return new Turno_parziale(giornoTurno, inizio, fine, reparto, paga_parziale);
 
 }
 
