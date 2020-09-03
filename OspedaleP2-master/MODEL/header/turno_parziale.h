@@ -32,3 +32,5 @@ public:
     virtual const Colore getColor() const;
     virtual string getTag() const;
 };
+
+#endif // TURNO_PARZIALE_H
